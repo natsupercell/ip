@@ -3,12 +3,12 @@ public class UnitMessage extends Message {
         super(message);
     }
 
-    public String Get() {
+    public String get() {
         return message.get(0);
     }
 
-    public void DisplayAddMessage() {
+    public void displayAddMessage() {
         String addMessage = "added: ";
-        Message.Display(addMessage + this.Get());
+        Message.display(addMessage + this.get());
     }
 }

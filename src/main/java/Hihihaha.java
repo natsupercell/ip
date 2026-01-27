@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.List;
 public class Hihihaha {
     private Scanner sc;
-    private MessageContainer mc;
+    private TaskContainer tc;
     private static final String chatBotName = "Hihihahaaaaa";
     private static final Message hiMessage = new Message(
             List.of(
@@ -12,36 +12,30 @@ public class Hihihaha {
     );
     private static final Message byeMessage = new Message("Bye. Hope to see you again soon!");
     private static final Message sayGoodBye = new UnitMessage("bye");
-    private static final Message list = new UnitMessage("list");
 
-    public void Start() {
+    public void start() {
         sc = new Scanner(System.in);
-        mc = new MessageContainer();
-        Message.Display(hiMessage);
+        tc = new TaskContainer();
+        Message.display(hiMessage);
     }
 
-    public void Exit() {
-        Message.Display(byeMessage);
+    public void exit() {
+        Message.display(byeMessage);
         sc.close();
     }
 
-    public void Run() {
-        Start();
-        UnitMessage message = Message.GetMessage(sc);
+    public void run() {
+        start();
+        UnitMessage message = Message.getMessage(sc);
         while (!message.equals(sayGoodBye)) {
-            if (message.equals(list)) {
-                mc.Display();
-            } else {
-                mc.AddMessage(message);
-                mc.DisplayAddMessage(message);
-            }
-            message = Message.GetMessage(sc);
+            tc.processQuery(message);
+            message = Message.getMessage(sc);
         }
-        Exit();
+        exit();
     }
 
     public static void main(String[] args) {
         Hihihaha hihihaha = new Hihihaha();
-        hihihaha.Run();
+        hihihaha.run();
     }
 }

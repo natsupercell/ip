@@ -20,7 +20,7 @@ public class Message {
         this.message = message;
     }
 
-    public void Display() {
+    public void display() {
         System.out.println(lining);
         for (String s : message) {
             System.out.println(s);
@@ -28,16 +28,16 @@ public class Message {
         System.out.println(lining);
     }
 
-    public static void Display(Message message) {
-        message.Display();
+    public static void display(Message message) {
+        message.display();
     }
 
-    public static void Display(String string) {
+    public static void display(String string) {
         Message message = new Message(string);
-        message.Display();
+        message.display();
     }
 
-    public static UnitMessage GetMessage(Scanner sc) {
+    public static UnitMessage getMessage(Scanner sc) {
         String message = sc.nextLine();
         return new UnitMessage(message);
     }
