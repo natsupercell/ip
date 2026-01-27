@@ -1,10 +1,11 @@
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
     private static final String lining =
             "____________________________________________________________";
-    private List<String> message;
+    private final List<String> message;
 
     Message(String message) {
         this.message = new ArrayList<String>();
@@ -25,5 +26,17 @@ public class Message {
 
     public static void Display(Message message) {
         message.Display();
+    }
+
+    public static Message GetMessage(Scanner sc) {
+        String message = sc.nextLine();
+        return new Message(message);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return this.message.equals(message.message);
     }
 }
