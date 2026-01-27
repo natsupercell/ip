@@ -3,9 +3,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
-    private static final String lining =
+    protected static final String lining =
             "____________________________________________________________";
-    private final List<String> message;
+    protected List<String> message;
+
+    Message() {
+        this.message = new ArrayList<String>();
+    }
 
     Message(String message) {
         this.message = new ArrayList<String>();
@@ -18,8 +22,8 @@ public class Message {
 
     public void Display() {
         System.out.println(lining);
-        for (int i = 0; i < message.size(); i++) {
-            System.out.println(message.get(i));
+        for (String s : message) {
+            System.out.println(s);
         }
         System.out.println(lining);
     }
@@ -28,9 +32,14 @@ public class Message {
         message.Display();
     }
 
-    public static Message GetMessage(Scanner sc) {
+    public static void Display(String string) {
+        Message message = new Message(string);
+        message.Display();
+    }
+
+    public static UnitMessage GetMessage(Scanner sc) {
         String message = sc.nextLine();
-        return new Message(message);
+        return new UnitMessage(message);
     }
 
     @Override

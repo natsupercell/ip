@@ -2,6 +2,7 @@ import java.util.Scanner;
 import java.util.List;
 public class Hihihaha {
     private Scanner sc;
+    private MessageContainer mc;
     private static final String chatBotName = "Hihihahaaaaa";
     private static final Message hiMessage = new Message(
             List.of(
@@ -10,10 +11,12 @@ public class Hihihaha {
             )
     );
     private static final Message byeMessage = new Message("Bye. Hope to see you again soon!");
-    private static final Message sayGoodBye = new Message("bye");
+    private static final Message sayGoodBye = new UnitMessage("bye");
+    private static final Message list = new UnitMessage("list");
 
     public void Start() {
         sc = new Scanner(System.in);
+        mc = new MessageContainer();
         Message.Display(hiMessage);
     }
 
@@ -24,9 +27,14 @@ public class Hihihaha {
 
     public void Run() {
         Start();
-        Message message = Message.GetMessage(sc);
+        UnitMessage message = Message.GetMessage(sc);
         while (!message.equals(sayGoodBye)) {
-            Message.Display(message);
+            if (message.equals(list)) {
+                mc.Display();
+            } else {
+                mc.AddMessage(message);
+                mc.DisplayAddMessage(message);
+            }
             message = Message.GetMessage(sc);
         }
         Exit();
