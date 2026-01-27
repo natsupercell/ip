@@ -1,4 +1,5 @@
-public class Task extends UnitMessage {
+public abstract class Task extends UnitMessage {
+    protected char taskType;
     private boolean isDone;
 
     Task(String task) {
@@ -19,7 +20,7 @@ public class Task extends UnitMessage {
     }
 
     @Override
-    public String get() {
-        return String.format("[%c] %s", this.checker(), super.get());
+    public String toString() {
+        return String.format("[%c][%c] %s", this.taskType, this.checker(), super.toString());
     }
 }

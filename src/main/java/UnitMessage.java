@@ -3,12 +3,7 @@ public class UnitMessage extends Message {
         super(message);
     }
 
-    public String get() {
+    public String toString() {
         return message.get(0);
-    }
-
-    public void displayAddMessage() {
-        String addMessage = "added: ";
-        Message.display(addMessage + this.get());
     }
 }
