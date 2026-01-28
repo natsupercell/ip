@@ -1,18 +1,25 @@
 import java.util.List;
 
+/**
+ * Task to be done within a period of time
+ */
 public class Event extends Task {
-    private String from;
-    private String to;
-    private static char signature = 'E';
+    private static final char SIGNATURE = 'E';
 
-    Event(String task, String from, String to) {
+
+    Event(String task) {
         super(task);
-        this.from = from;
-        this.to = to;
-        this.taskType = signature;
+        this.taskType = SIGNATURE;
     }
 
-    public static Event produce(String string) {
+    /**
+     * Produce an Event based on the user input
+     * @param string Message from user to be processed
+     * @return An Event based on the user input
+     * @throws IllegalArgumentException Throw exception when the input string is invalid
+     */
+    public static Event produce(String string) throws IllegalArgumentException {
+        if (string == null) throw new IllegalArgumentException();
         String attributeName1 = "from";
         String attributeName2 = "to";
         List<TaskAttribute> list = TaskAttribute.split(string);
@@ -24,6 +31,18 @@ public class Event extends Task {
         String task = list.get(0).getDetail();
         String from = list.get(1).getDetail();
         String to = list.get(2).getDetail();
-        return new Event(task, from, to);
+        return Event.merge(task, from, to);
+    }
+
+    /**
+     * Merge the detail of task into task description
+     * @param task Task description
+     * @param from Starting time of the task
+     * @param to Finishing time of the task
+     */
+    public static Event merge(String task, String from, String to) {
+        return new Event(String.format(
+                "%s(from:%sto:%s)", task, from, to
+        ));
     }
 }
