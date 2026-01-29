@@ -21,8 +21,9 @@ public class Hihihaha {
      * Setups the chatbot
      */
     public void start() {
+        DataManager.initializeFile();
         sc = new Scanner(System.in);
-        tc = new TaskContainer();
+        tc = DataManager.read();
         Message.display(HI_MESSAGE);
     }
 
@@ -30,6 +31,7 @@ public class Hihihaha {
      * Terminates the chatbot
      */
     public void exit() {
+        DataManager.save(tc);
         Message.display(BYE_MESSAGE);
         sc.close();
     }
