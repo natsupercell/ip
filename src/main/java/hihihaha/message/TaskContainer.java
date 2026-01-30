@@ -1,3 +1,7 @@
+package hihihaha.message;
+
+import hihihaha.message.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +14,7 @@ public class TaskContainer extends Message {
     /**
      * Default constructor
      */
-    TaskContainer() {
+    public TaskContainer() {
         tasks = new ArrayList<Task>();
     }
 
@@ -99,7 +103,7 @@ public class TaskContainer extends Message {
     /**
      * Adds a task to the end of the list
      * Print relevant messages
-     * @param task Task to be added
+     * @param task Hihihaha.Task to be added
      */
     public void addTask(Task task) {
         String addTask = "Got it. I've added this task:";
@@ -114,7 +118,7 @@ public class TaskContainer extends Message {
 
     /**
      * Simply add task to the end of the list, without printing log messages
-     * @param task Task to be added
+     * @param task Hihihaha.Task to be added
      */
     public void loadTask(Task task) {
         this.tasks.add(task);
@@ -122,7 +126,7 @@ public class TaskContainer extends Message {
 
     /**
      * Processes messages from the user input, and makes actions based on that
-     * @param message Message to be processed
+     * @param message Hihihaha.Message to be processed
      */
     public void processQuery(UnitMessage message) {
         String string = message.toString();

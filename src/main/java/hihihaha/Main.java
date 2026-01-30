@@ -1,3 +1,5 @@
+package hihihaha;
+
 /**
  * For experimenting codes
  */

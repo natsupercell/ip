@@ -1,7 +1,9 @@
+package hihihaha.message;
+
 import java.util.List;
 
 /**
- * Task to be done within a period of time
+ * Hihihaha.Task to be done within a period of time
  */
 public class Event extends Task {
     private static final char SIGNATURE = 'E';
@@ -13,9 +15,9 @@ public class Event extends Task {
     }
 
     /**
-     * Produce an Event based on the user input
-     * @param string Message from user to be processed
-     * @return An Event based on the user input
+     * Produce an Hihihaha.Event based on the user input
+     * @param string Hihihaha.Message from user to be processed
+     * @return An Hihihaha.Event based on the user input
      * @throws IllegalArgumentException Throw exception when the input string is invalid
      */
     public static Event produce(String string) throws IllegalArgumentException {
@@ -36,7 +38,7 @@ public class Event extends Task {
 
     /**
      * Merge the detail of task into task description
-     * @param task Task description
+     * @param task Hihihaha.Task description
      * @param from Starting time of the task
      * @param to Finishing time of the task
      */

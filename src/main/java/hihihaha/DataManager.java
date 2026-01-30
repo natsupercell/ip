@@ -1,3 +1,8 @@
+package hihihaha;
+
+import hihihaha.message.Task;
+import hihihaha.message.TaskContainer;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.IOException;
@@ -33,8 +38,8 @@ public class DataManager {
     }
 
     /**
-     * Reads from the data file, then create a TaskContainer based on the data
-     * @return A TaskContainer corresponds to saved data
+     * Reads from the data file, then create a Hihihaha.TaskContainer based on the data
+     * @return A Hihihaha.TaskContainer corresponds to saved data
      */
     public static TaskContainer read() {
         TaskContainer tc = new TaskContainer();
@@ -50,8 +55,8 @@ public class DataManager {
     }
 
     /**
-     * Save data from a TaskContainer to hard disk
-     * @param tc TaskContainer to save data from
+     * Save data from a Hihihaha.TaskContainer to hard disk
+     * @param tc Hihihaha.TaskContainer to save data from
      */
     public static void save(TaskContainer tc) {
         try (PrintWriter writer = new PrintWriter(FILE)) {

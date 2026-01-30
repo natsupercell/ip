@@ -1,3 +1,5 @@
+package hihihaha.message;
+
 /**
  * Special messages, modified as Tasks
  */
@@ -6,7 +8,7 @@ public abstract class Task extends UnitMessage {
     private boolean isDone;
 
     /**
-     * Instantiates a Task
+     * Instantiates a Hihihaha.Task
      * @param task The task to be stored in the object
      */
     Task(String task) {
@@ -39,7 +41,7 @@ public abstract class Task extends UnitMessage {
     /**
      * Converts string of the form "[?][?] ..." into task
      * @param string String representation of the task
-     * @return Task corresponding to the string
+     * @return Hihihaha.Task corresponding to the string
      */
     public static Task stringToTask(String string) throws IllegalArgumentException {
         try {

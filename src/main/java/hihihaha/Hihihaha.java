@@ -1,3 +1,9 @@
+package hihihaha;
+
+import hihihaha.message.Message;
+import hihihaha.message.TaskContainer;
+import hihihaha.message.UnitMessage;
+
 import java.util.Scanner;
 import java.util.List;
 

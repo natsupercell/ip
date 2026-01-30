@@ -1,3 +1,5 @@
+package hihihaha.message;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ public class Message {
     }
 
     /**
-     * Instantiate a Message with a single line of text
+     * Instantiate a Hihihaha.Message with a single line of text
      * @param message The message to be stored in the object
      */
     Message(String message) {
@@ -27,7 +29,7 @@ public class Message {
     }
 
     /**
-     * Instantiate a Message with a multiple lines of text
+     * Instantiate a Hihihaha.Message with a multiple lines of text
      * @param messages The messages to be stored in the object
      */
     Message(List<String> messages) {
@@ -46,7 +48,7 @@ public class Message {
     }
 
     /**
-     * Displays the message from another Message
+     * Displays the message from another Hihihaha.Message
      */
     public static void display(Message message) {
         message.display();
@@ -63,7 +65,7 @@ public class Message {
     /**
      * Gets message from the user
      * @param sc Scanner from the chatbot
-     * @return Message inputted by the user
+     * @return Hihihaha.Message inputted by the user
      */
     public static UnitMessage getMessage(Scanner sc) {
         String message = sc.nextLine();
