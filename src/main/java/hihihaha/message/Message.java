@@ -20,19 +20,19 @@ public class Message {
     }
 
     /**
-     * Instantiate a Hihihaha.Message with a single line of text
+     * Instantiate a Message with a single line of text
      * @param message The message to be stored in the object
      */
-    Message(String message) {
+    public Message(String message) {
         this.messages = new ArrayList<String>();
         this.messages.add(message);
     }
 
     /**
-     * Instantiate a Hihihaha.Message with a multiple lines of text
+     * Instantiate a Message with a multiple lines of text
      * @param messages The messages to be stored in the object
      */
-    Message(List<String> messages) {
+    public Message(List<String> messages) {
         this.messages = messages;
     }
 
@@ -48,7 +48,7 @@ public class Message {
     }
 
     /**
-     * Displays the message from another Hihihaha.Message
+     * Displays the message from another Message
      */
     public static void display(Message message) {
         message.display();
@@ -65,7 +65,7 @@ public class Message {
     /**
      * Gets message from the user
      * @param sc Scanner from the chatbot
-     * @return Hihihaha.Message inputted by the user
+     * @return Message inputted by the user
      */
     public static UnitMessage getMessage(Scanner sc) {
         String message = sc.nextLine();

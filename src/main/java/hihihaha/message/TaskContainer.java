@@ -1,18 +1,17 @@
 package hihihaha.message;
 
-import hihihaha.message.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class used to store and manage Tasks
+ * A class used to store and manage Tasks.
+ * Provides core task manipulation logic (mark, unmark, add, delete,... Tasks).
  */
 public class TaskContainer extends Message {
     protected List<Task> tasks;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public TaskContainer() {
         tasks = new ArrayList<Task>();
@@ -30,7 +29,7 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Displays error message
+     * Displays error message.
      */
     private void displayInvalidIndexErrorMessage() {
         Message invalidIndexErrorMessage =
@@ -39,7 +38,7 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Displays error message
+     * Displays error message.
      */
     private void displayInvalidFormatErrorMessage() {
         Message invalidFormatErrorMessage =
@@ -48,7 +47,7 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Displays error message
+     * Displays error message.
      */
     private void displayInvalidPromptErrorMessage() {
         Message invalidPromptErrorMessage =
@@ -57,9 +56,9 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Marks a task as done
-     * Print relevant messages
-     * @param i The position of the task to be marked
+     * Marks a task as done.
+     * Prints relevant messages.
+     * @param i The position of the task to be marked.
      */
     public void mark(int i) {
         i--;
@@ -70,9 +69,9 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Unmarks a task (as not done)
-     * Print relevant messages
-     * @param i The position of the task to be unmarked
+     * Unmarks a task (as not done).
+     * Prints relevant messages.
+     * @param i The position of the task to be unmarked.
      */
     public void unmark(int i) {
         i--;
@@ -83,9 +82,9 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Deletes a task
-     * Print relevant messages
-     * @param i The position of the task to be deleted
+     * Deletes a task.
+     * Prints relevant messages.
+     * @param i The position of the task to be deleted.
      */
     public void delete(int i) {
         i--;
@@ -101,9 +100,9 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Adds a task to the end of the list
-     * Print relevant messages
-     * @param task Hihihaha.Task to be added
+     * Adds a task to the end of the list.
+     * Prints relevant messages.
+     * @param task Task to be added.
      */
     public void addTask(Task task) {
         String addTask = "Got it. I've added this task:";
@@ -117,16 +116,16 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Simply add task to the end of the list, without printing log messages
-     * @param task Hihihaha.Task to be added
+     * Adds task to the end of the list, without printing log messages.
+     * @param task Task to be added.
      */
     public void loadTask(Task task) {
         this.tasks.add(task);
     }
 
     /**
-     * Processes messages from the user input, and makes actions based on that
-     * @param message Hihihaha.Message to be processed
+     * Processes messages from the user input, and then makes actions based on that.
+     * @param message Message to be processed.
      */
     public void processQuery(UnitMessage message) {
         String string = message.toString();
@@ -214,8 +213,8 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Convert the whole container into a file (as string)
-     * @return The string format of the data to be written on the data file
+     * Converts the whole container into a file (as string).
+     * @return The string format of the data to be written on the data file.
      */
     @Override
     public String toString() {

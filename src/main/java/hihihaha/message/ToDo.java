@@ -3,13 +3,13 @@ package hihihaha.message;
 import java.util.List;
 
 /**
- * Hihihaha.Task to be done
+ * Task to be done
  */
 public class ToDo extends Task {
     private static final char SIGNATURE = 'T';
 
     /**
-     * @param task Hihihaha.Task description
+     * @param task Task description
      */
     ToDo(String task) {
         super(task);
@@ -17,9 +17,9 @@ public class ToDo extends Task {
     }
 
     /**
-     * Produce a Hihihaha.ToDo based on the user input
-     * @param string Hihihaha.Message from user to be processed
-     * @return A Hihihaha.ToDo based on the user input
+     * Produce a ToDo based on the user input
+     * @param string Message from user to be processed
+     * @return A ToDo based on the user input
      * @throws IllegalArgumentException Throw exception when the input string is invalid
      */
     public static ToDo produce(String string) throws IllegalArgumentException {

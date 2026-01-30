@@ -10,8 +10,9 @@ import java.util.Scanner;
 
 
 /**
- * Utility class
- * Manage files from hard disk
+ * A utility class responsible for persistent data storage operations.
+ * This class handles reading task data from and saving task data to the local hard disk,
+ * ensuring that user data is preserved across application sessions.
  */
 public class DataManager {
     private static final String FOLDER_NAME = "data";
@@ -20,12 +21,14 @@ public class DataManager {
     private static final File FILE = new File(FOLDER, FILE_NAME);
 
     /**
-     * Private constructor, so that it cannot be instantiated (expected behavior)
+     * Prevents instantiation of this utility class.
+     * All methods in this class are static; therefore, it should not be instantiated.
      */
     private DataManager() {}
 
     /**
-     * Checks if the task data file and its parent folder already exist, if not create new ones
+     * Ensures that the data file exists in the intended relative location.
+     * If it does not exist, create new file (and its parent folders, if needed).
      */
     public static void initializeFile() {
         try {
@@ -38,8 +41,8 @@ public class DataManager {
     }
 
     /**
-     * Reads from the data file, then create a Hihihaha.TaskContainer based on the data
-     * @return A Hihihaha.TaskContainer corresponds to saved data
+     * Reads from the data file, then create a TaskContainer based on the data.
+     * @return A TaskContainer corresponds to saved data.
      */
     public static TaskContainer read() {
         TaskContainer tc = new TaskContainer();
@@ -55,8 +58,8 @@ public class DataManager {
     }
 
     /**
-     * Save data from a Hihihaha.TaskContainer to hard disk
-     * @param tc Hihihaha.TaskContainer to save data from
+     * Saves data from a TaskContainer to hard disk.
+     * @param tc TaskContainer to save data from.
      */
     public static void save(TaskContainer tc) {
         try (PrintWriter writer = new PrintWriter(FILE)) {
