@@ -1,9 +1,17 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * Special messages, modified as Tasks
  */
 public abstract class Task extends UnitMessage {
+    protected static final DateTimeFormatter READ_FORMAT =
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    protected static final DateTimeFormatter WRITE_FORMAT =
+            DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
     protected char taskType;
-    private boolean isDone;
+    protected boolean isDone;
 
     /**
      * Instantiates a Task
@@ -18,7 +26,7 @@ public abstract class Task extends UnitMessage {
      * A helper function for the toString() method
      * @return A symbol indicating whether the task is marked as done or not
      */
-    private char checker() {
+    protected char checker() {
         return isDone ? 'X' : ' ';
     }
 
@@ -37,36 +45,51 @@ public abstract class Task extends UnitMessage {
     }
 
     /**
-     * Converts string of the form "[?][?] ..." into task
+     * Converts data into task
      * @param string String representation of the task
      * @return Task corresponding to the string
      */
-    public static Task stringToTask(String string) throws IllegalArgumentException {
+    public static Task dataToTask(String string) throws IllegalArgumentException {
         try {
-            char taskTypeChar = string.charAt(1);
-            char isDoneChar = string.charAt(4);
-            String taskString = string.substring(7);
+            String[] params = string.split(" \\|\\| ");
+            if (params.length < 3) {
+                throw new IllegalArgumentException();
+            }
+            String taskTypeString = params[0];
+            String isDoneString = params[1];
+            String taskString = params[2];
             Task task;
 
-            switch (taskTypeChar) {
-            case 'T':
+            switch (taskTypeString) {
+            case "T":
                 task = new ToDo(taskString);
                 break;
-            case 'D':
-                task = new Deadline(taskString);
+            case "D":
+                try {
+                    task = new Deadline(taskString,
+                            LocalDateTime.parse(params[3], READ_FORMAT));
+                } catch (DateTimeParseException e) {
+                    throw new IllegalArgumentException();
+                }
                 break;
-            case 'E':
-                task = new Event(taskString);
+            case "E":
+                try {
+                    task = new Event(taskString,
+                            LocalDateTime.parse(params[3], READ_FORMAT),
+                            LocalDateTime.parse(params[4], READ_FORMAT));
+                }  catch (DateTimeParseException e) {
+                    throw new IllegalArgumentException();
+                }
                 break;
             default:
                 throw new IllegalArgumentException();
             }
 
-            switch (isDoneChar) {
-            case 'X':
+            switch (isDoneString) {
+            case "true":
                 task.mark();
                 break;
-            case ' ':
+            case "false":
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -79,8 +102,26 @@ public abstract class Task extends UnitMessage {
         }
     }
 
+    /**
+     * Converts task into data
+     * Implemented explicitly for each subclass of Task
+     * @return Data representation of task
+     */
+    abstract String taskToData();
+
+    /**
+     * Converts task into data
+     * @param task Task to be converted into string
+     * @return Data representation of task
+     */
+    public static String taskToData(Task task) {
+        return task.taskToData();
+    }
+
+    /*
     @Override
     public String toString() {
         return String.format("[%c][%c] %s", this.taskType, this.checker(), super.toString());
     }
+    */
 }

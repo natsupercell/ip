@@ -3,7 +3,6 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-
 /**
  * Utility class
  * Manage files from hard disk
@@ -40,7 +39,7 @@ public class DataManager {
         TaskContainer tc = new TaskContainer();
         try (Scanner scanner = new Scanner(FILE)) {
             while (scanner.hasNextLine()) {
-                Task task = Task.stringToTask(scanner.nextLine());
+                Task task = Task.dataToTask(scanner.nextLine());
                 tc.loadTask(task);
             }
         } catch (IOException e) {

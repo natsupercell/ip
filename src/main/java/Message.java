@@ -22,6 +22,9 @@ public class Message {
      * @param message The message to be stored in the object
      */
     Message(String message) {
+        // Preprocess the message
+        message = StringTrimmer.trim(message);
+
         this.messages = new ArrayList<String>();
         this.messages.add(message);
     }

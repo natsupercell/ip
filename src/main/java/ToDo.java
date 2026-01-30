@@ -21,10 +21,25 @@ public class ToDo extends Task {
      * @throws IllegalArgumentException Throw exception when the input string is invalid
      */
     public static ToDo produce(String string) throws IllegalArgumentException {
-        if (string == null) throw new IllegalArgumentException();
         List<TaskAttribute> list = TaskAttribute.split(string);
         if (list.size() != 1) throw new IllegalArgumentException();
-        String task = list.get(0).getDetail();
+        String task = StringTrimmer.trim(list.get(0).getDetail());
         return new ToDo(task);
+    }
+
+    @Override
+    public String taskToData() {
+        return ""
+                + taskType + " || "
+                + isDone + " || "
+                + super.toString();
+    }
+
+    /**
+     * Merge the details of task into string representation (oh this one no need to merge)
+     */
+    @Override
+    public String toString() {
+        return String.format("[%c][%c] %s", this.taskType, super.checker(), super.toString());
     }
 }
