@@ -1,16 +1,20 @@
 package hihihaha.message;
 
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 /**
  * Task with a deadline
  */
 public class Deadline extends Task {
     private static final char SIGNATURE = 'D';
+    private LocalDateTime by;
 
-    Deadline(String task) {
+    Deadline(String task, LocalDateTime by) {
         super(task);
         this.taskType = SIGNATURE;
+        this.by = by;
     }
 
     /**
@@ -20,24 +24,41 @@ public class Deadline extends Task {
      * @throws IllegalArgumentException Throw exception when the input string is invalid
      */
     public static Deadline produce(String string) throws IllegalArgumentException {
-        if (string == null) throw new IllegalArgumentException();
         String attributeName1 = "by";
         List<TaskAttribute> list = TaskAttribute.split(string);
-        if (list.size() != 2) throw new IllegalArgumentException();
-        if (!list.get(1).getAttributeName().equals(attributeName1)) throw new IllegalArgumentException();
-        String task = list.get(0).getDetail();
-        String by = list.get(1).getDetail();
-        return Deadline.merge(task, by);
+        if (list.size() != 2
+                || !list.get(1).getAttributeName().equals(attributeName1)) {
+            throw new IllegalArgumentException();
+        }
+        String task = StringTrimmer.trim(list.get(0).getDetail());
+        String byString = StringTrimmer.trim(list.get(1).getDetail());
+
+        try {
+            LocalDateTime by = LocalDateTime.parse(byString, Task.READ_FORMAT);
+            return new Deadline(task, by);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public String taskToData() {
+        return ""
+                + taskType + " || "
+                + isDone + " || "
+                + super.toString() + " || "
+                + by.format(READ_FORMAT);
     }
 
     /**
-     * Merge the detail of task into task description
-     * @param task Task description
-     * @param by Deadline of the task
+     * Merge the details of task into string representation
      */
-    public static Deadline merge(String task, String by) {
-        return new Deadline(String.format(
-                "%s(by:%s)", task, by
-        ));
+    @Override
+    public String toString() {
+        String text = String.format(
+                "%s (by: %s)", super.toString(),
+                by.format(WRITE_FORMAT)
+        );
+        return String.format("[%c][%c] %s", this.taskType, super.checker(), text);
     }
 }

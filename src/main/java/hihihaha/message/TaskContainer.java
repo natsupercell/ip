@@ -223,10 +223,10 @@ public class TaskContainer extends Message {
         for (Task task: tasks) {
             if (isBeginning) { // help removing unnecessary ends of line
                 isBeginning = false;
-                out += task;
+                out += task.taskToData();
                 continue;
             }
-            out += "\n" + task;
+            out += "\n" + task.taskToData();
         }
         return out;
     }

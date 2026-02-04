@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-
 /**
  * A utility class responsible for persistent data storage operations.
  * This class handles reading task data from and saving task data to the local hard disk,
@@ -48,7 +47,7 @@ public class DataManager {
         TaskContainer tc = new TaskContainer();
         try (Scanner scanner = new Scanner(FILE)) {
             while (scanner.hasNextLine()) {
-                Task task = Task.stringToTask(scanner.nextLine());
+                Task task = Task.dataToTask(scanner.nextLine());
                 tc.loadTask(task);
             }
         } catch (IOException e) {
