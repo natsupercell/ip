@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * A utility class responsible for persistent data storage operations.
- * This class handles reading task data from and saving task data to the local hard disk,
- * ensuring that user data is preserved across application sessions.
+ * A utility class responsible for persistent data storage operations. This
+ * class handles reading task data from and saving task data to the local hard
+ * disk, ensuring that user data is preserved across application sessions.
  */
 public class DataManager {
     private static final String FOLDER_NAME = "data";
@@ -20,14 +20,15 @@ public class DataManager {
     private static final File FILE = new File(FOLDER, FILE_NAME);
 
     /**
-     * Prevents instantiation of this utility class.
-     * All methods in this class are static; therefore, it should not be instantiated.
+     * Prevents instantiation of this utility class. All methods in this class are
+     * static; therefore, it should not be instantiated.
      */
-    private DataManager() {}
+    private DataManager() {
+    }
 
     /**
-     * Ensures that the data file exists in the intended relative location.
-     * If it does not exist, create new file (and its parent folders, if needed).
+     * Ensures that the data file exists in the intended relative location. If it
+     * does not exist, create new file (and its parent folders, if needed).
      */
     public static void initializeFile() {
         try {
@@ -41,6 +42,7 @@ public class DataManager {
 
     /**
      * Reads from the data file, then create a TaskContainer based on the data.
+     * 
      * @return A TaskContainer corresponds to saved data.
      */
     public static TaskContainer read() {
@@ -58,7 +60,9 @@ public class DataManager {
 
     /**
      * Saves data from a TaskContainer to hard disk.
-     * @param tc TaskContainer to save data from.
+     * 
+     * @param tc
+     *            TaskContainer to save data from.
      */
     public static void save(TaskContainer tc) {
         try (PrintWriter writer = new PrintWriter(FILE)) {

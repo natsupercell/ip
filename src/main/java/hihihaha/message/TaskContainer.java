@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class used to store and manage Tasks.
- * Provides core task manipulation logic (mark, unmark, add, delete,... Tasks).
+ * A class used to store and manage Tasks. Provides core task manipulation logic
+ * (mark, unmark, add, delete,... Tasks).
  */
 public class TaskContainer extends Message {
     protected List<Task> tasks;
@@ -32,8 +32,7 @@ public class TaskContainer extends Message {
      * Displays error message.
      */
     private void displayInvalidIndexErrorMessage() {
-        Message invalidIndexErrorMessage =
-                new Message("Sorry, I cannot do that. The index is invalid >.<");
+        Message invalidIndexErrorMessage = new Message("Sorry, I cannot do that. The index is invalid >.<");
         display(invalidIndexErrorMessage);
     }
 
@@ -41,8 +40,7 @@ public class TaskContainer extends Message {
      * Displays error message.
      */
     private void displayInvalidFormatErrorMessage() {
-        Message invalidFormatErrorMessage =
-                new Message("Sorry, I cannot do that. The format is invalid >.<");
+        Message invalidFormatErrorMessage = new Message("Sorry, I cannot do that. The format is invalid >.<");
         display(invalidFormatErrorMessage);
     }
 
@@ -50,15 +48,15 @@ public class TaskContainer extends Message {
      * Displays error message.
      */
     private void displayInvalidPromptErrorMessage() {
-        Message invalidPromptErrorMessage =
-                new Message("Sorry, I don't understand what you are saying >.<");
+        Message invalidPromptErrorMessage = new Message("Sorry, I don't understand what you are saying >.<");
         display(invalidPromptErrorMessage);
     }
 
     /**
-     * Marks a task as done.
-     * Prints relevant messages.
-     * @param i The position of the task to be marked.
+     * Marks a task as done. Prints relevant messages.
+     * 
+     * @param i
+     *            The position of the task to be marked.
      */
     public void mark(int i) {
         i--;
@@ -69,9 +67,10 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Unmarks a task (as not done).
-     * Prints relevant messages.
-     * @param i The position of the task to be unmarked.
+     * Unmarks a task (as not done). Prints relevant messages.
+     * 
+     * @param i
+     *            The position of the task to be unmarked.
      */
     public void unmark(int i) {
         i--;
@@ -82,9 +81,10 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Deletes a task.
-     * Prints relevant messages.
-     * @param i The position of the task to be deleted.
+     * Deletes a task. Prints relevant messages.
+     * 
+     * @param i
+     *            The position of the task to be deleted.
      */
     public void delete(int i) {
         i--;
@@ -92,32 +92,27 @@ public class TaskContainer extends Message {
         Task task = this.tasks.get(i);
         this.tasks.remove(i);
         String sizeReport = String.format("Now you have %d tasks in the list.", this.tasks.size());
-        display(new Message(List.of(
-                removeTask,
-                "  " + task.toString(),
-                sizeReport
-        )));
+        display(new Message(List.of(removeTask, "  " + task.toString(), sizeReport)));
     }
 
     /**
-     * Adds a task to the end of the list.
-     * Prints relevant messages.
-     * @param task Task to be added.
+     * Adds a task to the end of the list. Prints relevant messages.
+     * 
+     * @param task
+     *            Task to be added.
      */
     public void addTask(Task task) {
         String addTask = "Got it. I've added this task:";
         this.tasks.add(task);
         String sizeReport = String.format("Now you have %d tasks in the list.", this.tasks.size());
-        display(new Message(List.of(
-                addTask,
-                "  " + task.toString(),
-                sizeReport
-        )));
+        display(new Message(List.of(addTask, "  " + task.toString(), sizeReport)));
     }
 
     /**
      * Adds task to the end of the list, without printing log messages.
-     * @param task Task to be added.
+     * 
+     * @param task
+     *            Task to be added.
      */
     public void loadTask(Task task) {
         this.tasks.add(task);
@@ -125,7 +120,9 @@ public class TaskContainer extends Message {
 
     /**
      * Processes messages from the user input, and then makes actions based on that.
-     * @param message Message to be processed.
+     * 
+     * @param message
+     *            Message to be processed.
      */
     public void processQuery(UnitMessage message) {
         String string = message.toString();
@@ -144,83 +141,84 @@ public class TaskContainer extends Message {
             param = string.substring(split + 1);
 
         switch (prompt) {
-        case "list":
-            this.display();
-            break;
-        case "mark":
-            try {
-                Integer x = Integer.valueOf(param);
-                mark(x);
-            } catch (NumberFormatException e) {
-                displayInvalidIndexErrorMessage();
-            } catch (IndexOutOfBoundsException e) {
-                displayInvalidIndexErrorMessage();
-            } finally {
+            case "list" :
+                this.display();
                 break;
-            }
-        case "unmark":
-            try {
-                Integer x = Integer.valueOf(param);
-                unmark(x);
-            } catch (NumberFormatException e) {
-                displayInvalidIndexErrorMessage();
-            } catch (IndexOutOfBoundsException e) {
-                displayInvalidIndexErrorMessage();
-            } finally {
-                break;
-            }
-        case "delete":
-            try {
-                Integer x = Integer.valueOf(param);
-                delete(x);
-            } catch (NumberFormatException e) {
-                displayInvalidIndexErrorMessage();
-            } catch (IndexOutOfBoundsException e) {
-                displayInvalidIndexErrorMessage();
-            } finally {
-                break;
-            }
-        case "todo":
-            try {
-                ToDo task = ToDo.produce(param);
-                addTask(task);
-            } catch (IllegalArgumentException e) {
-                displayInvalidFormatErrorMessage();
-            } finally {
-                break;
-            }
-        case "deadline":
-            try {
-                Deadline task = Deadline.produce(param);
-                addTask(task);
-            } catch (IllegalArgumentException e) {
-                displayInvalidFormatErrorMessage();
-            } finally {
-                break;
-            }
-        case "event":
-            try {
-                Event task = Event.produce(param);
-                addTask(task);
-            } catch (IllegalArgumentException e) {
-                displayInvalidFormatErrorMessage();
-            } finally {
-                break;
-            }
-        default:
-            displayInvalidPromptErrorMessage();
+            case "mark" :
+                try {
+                    Integer x = Integer.valueOf(param);
+                    mark(x);
+                } catch (NumberFormatException e) {
+                    displayInvalidIndexErrorMessage();
+                } catch (IndexOutOfBoundsException e) {
+                    displayInvalidIndexErrorMessage();
+                } finally {
+                    break;
+                }
+            case "unmark" :
+                try {
+                    Integer x = Integer.valueOf(param);
+                    unmark(x);
+                } catch (NumberFormatException e) {
+                    displayInvalidIndexErrorMessage();
+                } catch (IndexOutOfBoundsException e) {
+                    displayInvalidIndexErrorMessage();
+                } finally {
+                    break;
+                }
+            case "delete" :
+                try {
+                    Integer x = Integer.valueOf(param);
+                    delete(x);
+                } catch (NumberFormatException e) {
+                    displayInvalidIndexErrorMessage();
+                } catch (IndexOutOfBoundsException e) {
+                    displayInvalidIndexErrorMessage();
+                } finally {
+                    break;
+                }
+            case "todo" :
+                try {
+                    ToDo task = ToDo.produce(param);
+                    addTask(task);
+                } catch (IllegalArgumentException e) {
+                    displayInvalidFormatErrorMessage();
+                } finally {
+                    break;
+                }
+            case "deadline" :
+                try {
+                    Deadline task = Deadline.produce(param);
+                    addTask(task);
+                } catch (IllegalArgumentException e) {
+                    displayInvalidFormatErrorMessage();
+                } finally {
+                    break;
+                }
+            case "event" :
+                try {
+                    Event task = Event.produce(param);
+                    addTask(task);
+                } catch (IllegalArgumentException e) {
+                    displayInvalidFormatErrorMessage();
+                } finally {
+                    break;
+                }
+            default :
+                displayInvalidPromptErrorMessage();
         }
     }
 
     /**
      * Converts the whole container into a file (as string).
+     * 
      * @return The string format of the data to be written on the data file.
      */
     @Override
     public String toString() {
         String out = "";
         boolean isBeginning = true;
-        for (Task task: tasks) {
+        for (Task task : tasks) {
             if (isBeginning) { // help removing unnecessary ends of line
                 isBeginning = false;
                 out += task.taskToData();

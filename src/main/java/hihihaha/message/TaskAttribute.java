@@ -12,8 +12,10 @@ public class TaskAttribute {
     private String detail; // detail of the attribute
 
     /**
-     * @param attributeName Name of the attribute type
-     * @param detail Detail of the attribute
+     * @param attributeName
+     *            Name of the attribute type
+     * @param detail
+     *            Detail of the attribute
      */
     TaskAttribute(String attributeName, String detail) {
         this.attributeName = attributeName;
@@ -36,7 +38,9 @@ public class TaskAttribute {
 
     /**
      * Split the input string (from the user) into list of task attributes
-     * @param string Input string from the user
+     * 
+     * @param string
+     *            Input string from the user
      */
     public static List<TaskAttribute> split(String string) throws IllegalArgumentException {
         if (string == null) {
@@ -59,7 +63,8 @@ public class TaskAttribute {
                             attributeName += string.charAt(i);
                         }
                     }
-                    if (i == string.length()) throw new IllegalArgumentException();
+                    if (i == string.length())
+                        throw new IllegalArgumentException();
                     detail = "";
                 }
                 continue;

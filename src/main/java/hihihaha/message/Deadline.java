@@ -1,5 +1,6 @@
 package hihihaha.message;
 
+import hihihaha.StringTrimmer;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -19,15 +20,17 @@ public class Deadline extends Task {
 
     /**
      * Produce a Deadline based on the user input
-     * @param string Message from user to be processed
+     * 
+     * @param string
+     *            Message from user to be processed
      * @return A Deadline based on the user input
-     * @throws IllegalArgumentException Throw exception when the input string is invalid
+     * @throws IllegalArgumentException
+     *             Throw exception when the input string is invalid
      */
     public static Deadline produce(String string) throws IllegalArgumentException {
         String attributeName1 = "by";
         List<TaskAttribute> list = TaskAttribute.split(string);
-        if (list.size() != 2
-                || !list.get(1).getAttributeName().equals(attributeName1)) {
+        if (list.size() != 2 || !list.get(1).getAttributeName().equals(attributeName1)) {
             throw new IllegalArgumentException();
         }
         String task = StringTrimmer.trim(list.get(0).getDetail());
@@ -43,11 +46,7 @@ public class Deadline extends Task {
 
     @Override
     public String taskToData() {
-        return ""
-                + taskType + " || "
-                + isDone + " || "
-                + super.toString() + " || "
-                + by.format(READ_FORMAT);
+        return "" + taskType + " || " + isDone + " || " + super.toString() + " || " + by.format(READ_FORMAT);
     }
 
     /**
@@ -55,10 +54,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        String text = String.format(
-                "%s (by: %s)", super.toString(),
-                by.format(WRITE_FORMAT)
-        );
+        String text = String.format("%s (by: %s)", super.toString(), by.format(WRITE_FORMAT));
         return String.format("[%c][%c] %s", this.taskType, super.checker(), text);
     }
 }

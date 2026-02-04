@@ -6,7 +6,9 @@ package hihihaha.message;
 public class UnitMessage extends Message {
     /**
      * Instantiates an UnitMessage
-     * @param message The message to be stored in the object
+     * 
+     * @param message
+     *            The message to be stored in the object
      */
     public UnitMessage(String message) {
         super(message);
