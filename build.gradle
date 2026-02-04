@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
+    id 'com.diffplug.spotless' version '8.2.1'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
@@ -36,6 +38,37 @@ shadowJar {
     archiveClassifier = null
 }
 
-run{
+run {
     standardInput = System.in
+}
+
+// Features added by ChatGPT below
+
+checkstyle {
+    // Pick a Checkstyle version; 12.1.2 is current on the Checkstyle site. :contentReference[oaicite:0]{index=0}
+    toolVersion = '12.1.2'
+    configFile = file('config/checkstyle/checkstyle.xml')
+}
+
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+spotless {
+    java {
+        // Uses your exported Eclipse formatter XML profile
+        eclipse().configFile('config/formatter/eclipse-formatter.xml')
+
+        // Optional but commonly useful:
+        // trimTrailingWhitespace()
+        // endWithNewline()
+    }
+}
+
+// Make `./gradlew check` also run spotlessCheck
+tasks.named('check') {
+    dependsOn 'spotlessCheck'
 }
