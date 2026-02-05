@@ -1,7 +1,12 @@
 package hihihaha.message;
 
+import hihihaha.StringTrimmer;
+
 import java.util.ArrayList;
 import java.util.List;
+
+// TODO: update core methods: mark, unmark, etc
+// TODO: using the newly built and more robust displayCustom and message manipulation methods
 
 /**
  * A class used to store and manage Tasks. Provides core task manipulation logic
@@ -10,22 +15,55 @@ import java.util.List;
 public class TaskContainer extends Message {
     protected List<Task> tasks;
 
-    /**
-     * Default constructor.
-     */
     public TaskContainer() {
-        tasks = new ArrayList<Task>();
+        tasks = new ArrayList<>();
     }
 
-    @Override
-    public void display() {
-        String whatever = "Here are the tasks in your list:";
-        System.out.println(LINING);
-        System.out.println(whatever);
+    public TaskContainer(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    /**
+     * Checks if the container is empty.
+     */
+    public boolean isEmpty() {
+        return tasks.isEmpty();
+    }
+
+    public Message toMessage() {
+        List<String> messages = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.printf("%d.%s\n", i + 1, tasks.get(i).toString());
+            messages.add(String.format("%d.%s", i + 1, tasks.get(i).toString()));
         }
-        System.out.println(LINING);
+        return new Message(messages);
+    }
+
+    /**
+     * Lists the tasks in the TaskContainer, with custom message before listing.
+     * 
+     * @param startMessage
+     *            Message before listing.
+     */
+    public void displayCustom(String startMessage) {
+        Message output = this.toMessage();
+        output.addFront(startMessage);
+        display(output);
+    }
+
+    /**
+     * Lists the tasks in the TaskContainer, with custom message before and after
+     * listing.
+     * 
+     * @param startMessage
+     *            Message before listing.
+     * @param endMessage
+     *            Message after listing.
+     */
+    public void displayCustom(String startMessage, String endMessage) {
+        Message output = this.toMessage();
+        output.addFront(startMessage);
+        output.addBack(endMessage);
+        display(output);
     }
 
     /**
@@ -81,6 +119,14 @@ public class TaskContainer extends Message {
     }
 
     /**
+     * Lists the tasks in the TaskContainer.
+     */
+    public void listTask() {
+        String list = "Here are the tasks in your list:";
+        displayCustom(list);
+    }
+
+    /**
      * Deletes a task. Prints relevant messages.
      * 
      * @param i
@@ -118,6 +164,26 @@ public class TaskContainer extends Message {
         this.tasks.add(task);
     }
 
+    public void findTask(String keyword) {
+        final String trimmedKeyword = StringTrimmer.trim(keyword); // allowing user to accidentally add more spaces at
+                                                                   // the end of command
+
+        String taskFound = "Here are the matching tasks in your list:";
+        String noTaskFound = "There is no task with the keyword: " + trimmedKeyword;
+
+        TaskContainer result = new TaskContainer(
+                tasks.stream().filter(task -> task.nameContains(trimmedKeyword)).toList());
+
+        Message messages = result.toMessage();
+        if (!result.isEmpty()) {
+            messages.addFront(taskFound);
+        } else {
+            messages.addFront(noTaskFound);
+        }
+
+        display(messages);
+    }
+
     /**
      * Processes messages from the user input, and then makes actions based on that.
      * 
@@ -141,71 +207,74 @@ public class TaskContainer extends Message {
             param = string.substring(split + 1);
 
         switch (prompt) {
-            case "list" :
-                this.display();
+        case "list" :
+            this.listTask();
+            break;
+        case "find" :
+            this.findTask(param);
+            break;
+        case "mark" :
+            try {
+                Integer x = Integer.valueOf(param);
+                markTask(x);
+            } catch (NumberFormatException e) {
+                displayInvalidIndexErrorMessage();
+            } catch (IndexOutOfBoundsException e) {
+                displayInvalidIndexErrorMessage();
+            } finally {
                 break;
-            case "mark" :
-                try {
-                    Integer x = Integer.valueOf(param);
-                    markTask(x);
-                } catch (NumberFormatException e) {
-                    displayInvalidIndexErrorMessage();
-                } catch (IndexOutOfBoundsException e) {
-                    displayInvalidIndexErrorMessage();
-                } finally {
-                    break;
-                }
-            case "unmark" :
-                try {
-                    Integer x = Integer.valueOf(param);
-                    unmarkTask(x);
-                } catch (NumberFormatException e) {
-                    displayInvalidIndexErrorMessage();
-                } catch (IndexOutOfBoundsException e) {
-                    displayInvalidIndexErrorMessage();
-                } finally {
-                    break;
-                }
-            case "delete" :
-                try {
-                    Integer x = Integer.valueOf(param);
-                    deleteTask(x);
-                } catch (NumberFormatException e) {
-                    displayInvalidIndexErrorMessage();
-                } catch (IndexOutOfBoundsException e) {
-                    displayInvalidIndexErrorMessage();
-                } finally {
-                    break;
-                }
-            case "todo" :
-                try {
-                    Todo task = Todo.produce(param);
-                    addTask(task);
-                } catch (IllegalArgumentException e) {
-                    displayInvalidFormatErrorMessage();
-                } finally {
-                    break;
-                }
-            case "deadline" :
-                try {
-                    Deadline task = Deadline.produce(param);
-                    addTask(task);
-                } catch (IllegalArgumentException e) {
-                    displayInvalidFormatErrorMessage();
-                } finally {
-                    break;
-                }
-            case "event" :
-                try {
-                    Event task = Event.produce(param);
-                    addTask(task);
-                } catch (IllegalArgumentException e) {
-                    displayInvalidFormatErrorMessage();
-                } finally {
-                    break;
-                }
-            default :
-                displayInvalidPromptErrorMessage();
+            }
+        case "unmark" :
+            try {
+                Integer x = Integer.valueOf(param);
+                unmarkTask(x);
+            } catch (NumberFormatException e) {
+                displayInvalidIndexErrorMessage();
+            } catch (IndexOutOfBoundsException e) {
+                displayInvalidIndexErrorMessage();
+            } finally {
+                break;
+            }
+        case "delete" :
+            try {
+                Integer x = Integer.valueOf(param);
+                deleteTask(x);
+            } catch (NumberFormatException e) {
+                displayInvalidIndexErrorMessage();
+            } catch (IndexOutOfBoundsException e) {
+                displayInvalidIndexErrorMessage();
+            } finally {
+                break;
+            }
+        case "todo" :
+            try {
+                Todo task = Todo.produce(param);
+                addTask(task);
+            } catch (IllegalArgumentException e) {
+                displayInvalidFormatErrorMessage();
+            } finally {
+                break;
+            }
+        case "deadline" :
+            try {
+                Deadline task = Deadline.produce(param);
+                addTask(task);
+            } catch (IllegalArgumentException e) {
+                displayInvalidFormatErrorMessage();
+            } finally {
+                break;
+            }
+        case "event" :
+            try {
+                Event task = Event.produce(param);
+                addTask(task);
+            } catch (IllegalArgumentException e) {
+                displayInvalidFormatErrorMessage();
+            } finally {
+                break;
+            }
+        default :
+            displayInvalidPromptErrorMessage();
         }
     }
 

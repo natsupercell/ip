@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class capable of storing multiple line of texts and display them as chatbot's messages.
+ * A class capable of storing multiple line of texts and display them as
+ * chatbot's messages.
  */
 public class Message {
     protected static final String LINING = "____________________________________________________________";
@@ -40,6 +41,24 @@ public class Message {
      */
     public Message(List<String> messages) {
         this.messages = messages;
+    }
+
+    /**
+     * Copies an instance of Message.
+     *
+     * @param message
+     *            The Message object to be copied.
+     */
+    public Message(Message message) {
+        this.messages = message.messages;
+    }
+
+    public void addFront(String message) {
+        messages.add(0, message);
+    }
+
+    public void addBack(String message) {
+        messages.add(message);
     }
 
     /**

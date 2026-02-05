@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * A class representing special messages, capable of storing essential data related to task management.
- * Provides core task manipulation logic.
+ * A class representing special messages, capable of storing essential data
+ * related to task management. Provides core task manipulation logic.
  */
 public abstract class Task extends UnitMessage {
     protected static final DateTimeFormatter READ_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -68,36 +68,36 @@ public abstract class Task extends UnitMessage {
             Task task;
 
             switch (taskTypeString) {
-                case "T" :
-                    task = new Todo(taskString);
-                    break;
-                case "D" :
-                    try {
-                        task = new Deadline(taskString, LocalDateTime.parse(params[3], READ_FORMAT));
-                    } catch (DateTimeParseException e) {
-                        throw new IllegalArgumentException();
-                    }
-                    break;
-                case "E" :
-                    try {
-                        task = new Event(taskString, LocalDateTime.parse(params[3], READ_FORMAT),
-                                LocalDateTime.parse(params[4], READ_FORMAT));
-                    } catch (DateTimeParseException e) {
-                        throw new IllegalArgumentException();
-                    }
-                    break;
-                default :
+            case "T" :
+                task = new Todo(taskString);
+                break;
+            case "D" :
+                try {
+                    task = new Deadline(taskString, LocalDateTime.parse(params[3], READ_FORMAT));
+                } catch (DateTimeParseException e) {
                     throw new IllegalArgumentException();
+                }
+                break;
+            case "E" :
+                try {
+                    task = new Event(taskString, LocalDateTime.parse(params[3], READ_FORMAT),
+                            LocalDateTime.parse(params[4], READ_FORMAT));
+                } catch (DateTimeParseException e) {
+                    throw new IllegalArgumentException();
+                }
+                break;
+            default :
+                throw new IllegalArgumentException();
             }
 
             switch (isDoneString) {
-                case "true" :
-                    task.mark();
-                    break;
-                case "false" :
-                    break;
-                default :
-                    throw new IllegalArgumentException();
+            case "true" :
+                task.mark();
+                break;
+            case "false" :
+                break;
+            default :
+                throw new IllegalArgumentException();
             }
 
             return task;
@@ -129,4 +129,16 @@ public abstract class Task extends UnitMessage {
      * @Override public String toString() { return String.format("[%c][%c] %s",
      * this.taskType, this.checker(), super.toString()); }
      */
+
+    /**
+     * Checks if the task's string representation contains the specified keyword.
+     * 
+     * @param keyword
+     *            The sequence of characters to search for.
+     * @return {@code true} if the keyword is found within the task string;
+     *         {@code false} otherwise.
+     */
+    public boolean nameContains(String keyword) {
+        return this.toString().contains(keyword);
+    }
 }

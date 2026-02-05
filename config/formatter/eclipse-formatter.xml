@@ -33,8 +33,7 @@
         <setting id="org.eclipse.jdt.core.formatter.insert_space_before_opening_paren_in_switch" value="insert"/>
 
         <!-- Switch indentation: keep case labels aligned with switch -->
-        <setting id="org.eclipse.jdt.core.formatter.indent_switchstatements_compare_to_switch" value="true"/>
-        <setting id="org.eclipse.jdt.core.formatter.indent_switchstatements_compare_to_cases" value="false"/>
-        <setting id="org.eclipse.jdt.core.formatter.indent_body_declarations_compare_to_type_header" value="true"/>
+        <setting id="org.eclipse.jdt.core.formatter.indent_switchstatements_compare_to_switch" value="false"/>
+        <setting id="org.eclipse.jdt.core.formatter.indent_switchstatements_compare_to_cases" value="true"/>
     </profile>
 </profiles>

@@ -61,8 +61,7 @@ public class Hihihaha {
     private static final Message BYE = new UnitMessage("bye");
 
     /**
-     * Activates the chatbot.
-     * Setups the essentials.
+     * Activates the chatbot. Setups the essentials.
      */
     public void start() {
         DataManager.initializeFile();
@@ -72,8 +71,7 @@ public class Hihihaha {
     }
 
     /**
-     * Terminates the chatbot.
-     * Saves data to hard disk.
+     * Terminates the chatbot. Saves data to hard disk.
      */
     public void exit() {
         DataManager.save(tc);
@@ -82,8 +80,8 @@ public class Hihihaha {
     }
 
     /**
-     * Runs the chatbot.
-     * Capable of understanding human input and operates based on the messages.
+     * Runs the chatbot. Capable of understanding human input and operates based on
+     * the messages.
      */
     public void run() {
         start();
