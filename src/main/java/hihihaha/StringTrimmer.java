@@ -5,7 +5,7 @@ package hihihaha;
  */
 public class StringTrimmer {
     public static String trim(String s) {
-        int l = s.length(); // begin of new string
+        int l = 0; // begin of new string
         int r = 0; // end of new string
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) != ' ') {

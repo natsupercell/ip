@@ -52,8 +52,10 @@ public class DataManager {
                 Task task = Task.dataToTask(scanner.nextLine());
                 tc.loadTask(task);
             }
-        } catch (IOException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("Couldn't load data. Data file is corrupted.");
+        } catch (IOException e) {
+            System.out.println("IOException occurred");
         }
         return tc;
     }

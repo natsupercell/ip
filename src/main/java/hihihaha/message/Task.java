@@ -1,6 +1,5 @@
 package hihihaha.message;
 
-import hihihaha.StringTrimmer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -13,6 +12,7 @@ public abstract class Task extends UnitMessage {
     protected static final DateTimeFormatter WRITE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
     protected char taskType;
     protected boolean isDone;
+    private static final String HARD_SPLITTER = " \\|\\| ";
 
     /**
      * Instantiates a Task
@@ -57,7 +57,7 @@ public abstract class Task extends UnitMessage {
      */
     public static Task dataToTask(String string) throws IllegalArgumentException {
         try {
-            String[] params = string.split(" \\|\\| ");
+            String[] params = string.split(HARD_SPLITTER);
             if (params.length < 3) {
                 throw new IllegalArgumentException();
             }
@@ -68,7 +68,7 @@ public abstract class Task extends UnitMessage {
 
             switch (taskTypeString) {
                 case "T" :
-                    task = new ToDo(taskString);
+                    task = new Todo(taskString);
                     break;
                 case "D" :
                     try {

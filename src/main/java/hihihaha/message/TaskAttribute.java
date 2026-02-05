@@ -1,5 +1,7 @@
 package hihihaha.message;
 
+import hihihaha.StringTrimmer;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -18,8 +20,8 @@ public class TaskAttribute {
      *            Detail of the attribute
      */
     TaskAttribute(String attributeName, String detail) {
-        this.attributeName = attributeName;
-        this.detail = detail;
+        this.attributeName = StringTrimmer.trim(attributeName); // handle exceptions from raw input
+        this.detail = StringTrimmer.trim(detail);
     }
 
     /**
@@ -72,5 +74,13 @@ public class TaskAttribute {
             detail += string.charAt(i);
         }
         return out;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass())
+            return false;
+        TaskAttribute t = (TaskAttribute) o;
+        return (this.attributeName.equals(t.attributeName)) && (this.detail.equals(t.detail));
     }
 }

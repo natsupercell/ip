@@ -6,14 +6,14 @@ import java.util.List;
 /**
  * Task to be done
  */
-public class ToDo extends Task {
+public class Todo extends Task {
     private static final char SIGNATURE = 'T';
 
     /**
      * @param task
      *            Task description
      */
-    ToDo(String task) {
+    Todo(String task) {
         super(task);
         this.taskType = SIGNATURE;
     }
@@ -27,12 +27,12 @@ public class ToDo extends Task {
      * @throws IllegalArgumentException
      *             Throw exception when the input string is invalid
      */
-    public static ToDo produce(String string) throws IllegalArgumentException {
+    public static Todo produce(String string) throws IllegalArgumentException {
         List<TaskAttribute> list = TaskAttribute.split(string);
         if (list.size() != 1)
             throw new IllegalArgumentException();
         String task = StringTrimmer.trim(list.get(0).getDetail());
-        return new ToDo(task);
+        return new Todo(task);
     }
 
     @Override

@@ -58,7 +58,7 @@ public class TaskContainer extends Message {
      * @param i
      *            The position of the task to be marked.
      */
-    public void mark(int i) {
+    public void markTask(int i) {
         i--;
         String whatever = "Nice! I've marked this task as done:";
         Task t = tasks.get(i);
@@ -72,7 +72,7 @@ public class TaskContainer extends Message {
      * @param i
      *            The position of the task to be unmarked.
      */
-    public void unmark(int i) {
+    public void unmarkTask(int i) {
         i--;
         String whatever = "OK, I've marked this task as not done yet:";
         Task t = tasks.get(i);
@@ -86,7 +86,7 @@ public class TaskContainer extends Message {
      * @param i
      *            The position of the task to be deleted.
      */
-    public void delete(int i) {
+    public void deleteTask(int i) {
         i--;
         String removeTask = "Noted. I've removed this task:";
         Task task = this.tasks.get(i);
@@ -147,7 +147,7 @@ public class TaskContainer extends Message {
             case "mark" :
                 try {
                     Integer x = Integer.valueOf(param);
-                    mark(x);
+                    markTask(x);
                 } catch (NumberFormatException e) {
                     displayInvalidIndexErrorMessage();
                 } catch (IndexOutOfBoundsException e) {
@@ -158,7 +158,7 @@ public class TaskContainer extends Message {
             case "unmark" :
                 try {
                     Integer x = Integer.valueOf(param);
-                    unmark(x);
+                    unmarkTask(x);
                 } catch (NumberFormatException e) {
                     displayInvalidIndexErrorMessage();
                 } catch (IndexOutOfBoundsException e) {
@@ -169,7 +169,7 @@ public class TaskContainer extends Message {
             case "delete" :
                 try {
                     Integer x = Integer.valueOf(param);
-                    delete(x);
+                    deleteTask(x);
                 } catch (NumberFormatException e) {
                     displayInvalidIndexErrorMessage();
                 } catch (IndexOutOfBoundsException e) {
@@ -179,7 +179,7 @@ public class TaskContainer extends Message {
                 }
             case "todo" :
                 try {
-                    ToDo task = ToDo.produce(param);
+                    Todo task = Todo.produce(param);
                     addTask(task);
                 } catch (IllegalArgumentException e) {
                     displayInvalidFormatErrorMessage();
