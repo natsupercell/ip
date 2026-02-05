@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
 /**
- * Task with a deadline
+ * Task with a deadline.
  */
 public class Deadline extends Task {
     private static final char SIGNATURE = 'D';
@@ -19,13 +19,13 @@ public class Deadline extends Task {
     }
 
     /**
-     * Produce a Deadline based on the user input
+     * Produce a Deadline based on the user input.
      * 
      * @param string
-     *            Message from user to be processed
-     * @return A Deadline based on the user input
+     *            Message from user to be processed.
+     * @return A Deadline based on the user input.
      * @throws IllegalArgumentException
-     *             Throw exception when the input string is invalid
+     *             Throw exception when the input string is invalid.
      */
     public static Deadline produce(String string) throws IllegalArgumentException {
         String attributeName1 = "by";
@@ -50,7 +50,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Merge the details of task into string representation
+     * Merge the details of task into string representation.
      */
     @Override
     public String toString() {

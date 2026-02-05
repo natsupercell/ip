@@ -83,7 +83,7 @@
         <module name="EmptyLineSeparator">
             <property name="allowNoEmptyLineBetweenFields" value="true"/>
             <property name="allowMultipleEmptyLines" value="false"/>
-            </module>
+        </module>
 
         <module name="ArrayTypeStyle"/>
 
@@ -128,7 +128,8 @@
             <property name="allowMissingReturnTag" value="false"/>
         </module>
 
-        <module name="JavadocStyle"/>
-
+        <module name="JavadocStyle">
+            <property name="checkFirstSentence" value="true"/>
+        </module>
     </module>
 </module>

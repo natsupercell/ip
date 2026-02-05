@@ -1,7 +1,7 @@
 package hihihaha;
 
 /**
- * Utility class, used to trim off excess whitespace of a string
+ * Utility class, used to trim off excess whitespace of a string.
  */
 public class StringTrimmer {
     public static String trim(String s) {
