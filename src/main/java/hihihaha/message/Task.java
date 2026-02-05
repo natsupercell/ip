@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Special messages, modified as Tasks
+ * A class representing special messages, capable of storing essential data related to task management.
+ * Provides core task manipulation logic.
  */
 public abstract class Task extends UnitMessage {
     protected static final DateTimeFormatter READ_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -15,10 +16,10 @@ public abstract class Task extends UnitMessage {
     private static final String HARD_SPLITTER = " \\|\\| ";
 
     /**
-     * Instantiates a Task
+     * Instantiates a Task.
      * 
      * @param task
-     *            The task to be stored in the object
+     *            The task to be stored in the object.
      */
     Task(String task) {
         super(task);
@@ -26,34 +27,34 @@ public abstract class Task extends UnitMessage {
     }
 
     /**
-     * A helper function for the toString() method
+     * A helper function for the toString() method.
      * 
-     * @return A symbol indicating whether the task is marked as done or not
+     * @return A symbol indicating whether the task is marked as done or not.
      */
     protected char checker() {
         return isDone ? 'X' : ' ';
     }
 
     /**
-     * Marks the task as done
+     * Marks the task as done.
      */
     public void mark() {
         isDone = true;
     }
 
     /**
-     * Unmarks the task (as not done)
+     * Unmarks the task (as not done).
      */
     public void unmark() {
         isDone = false;
     }
 
     /**
-     * Converts data into task
+     * Converts data into task.
      * 
      * @param string
-     *            String representation of the task
-     * @return Task corresponding to the string
+     *            String representation of the task.
+     * @return Task corresponding to the string.
      */
     public static Task dataToTask(String string) throws IllegalArgumentException {
         try {
@@ -107,18 +108,18 @@ public abstract class Task extends UnitMessage {
     }
 
     /**
-     * Converts task into data Implemented explicitly for each subclass of Task
+     * Converts task into data Implemented explicitly for each subclass of Task.
      * 
-     * @return Data representation of task
+     * @return Data representation of task.
      */
     abstract String taskToData();
 
     /**
-     * Converts task into data
+     * Converts task into data.
      * 
      * @param task
-     *            Task to be converted into string
-     * @return Data representation of task
+     *            Task to be converted into string.
+     * @return Data representation of task.
      */
     public static String taskToData(Task task) {
         return task.taskToData();

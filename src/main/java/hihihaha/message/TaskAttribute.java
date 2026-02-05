@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Capable of storing important information of a task
+ * Capable of storing important information of a task.
  */
 public class TaskAttribute {
     private static String defaultAttributeName = "task";
@@ -15,9 +15,9 @@ public class TaskAttribute {
 
     /**
      * @param attributeName
-     *            Name of the attribute type
+     *            Name of the attribute type.
      * @param detail
-     *            Detail of the attribute
+     *            Detail of the attribute.
      */
     TaskAttribute(String attributeName, String detail) {
         this.attributeName = StringTrimmer.trim(attributeName); // handle exceptions from raw input
@@ -25,24 +25,24 @@ public class TaskAttribute {
     }
 
     /**
-     * @return The name of the attribute type
+     * @return The name of the attribute type.
      */
     public String getAttributeName() {
         return attributeName;
     }
 
     /**
-     * @return Detail of the attribute
+     * @return Detail of the attribute.
      */
     public String getDetail() {
         return detail;
     }
 
     /**
-     * Split the input string (from the user) into list of task attributes
+     * Split the input string (from the user) into list of task attributes.
      * 
      * @param string
-     *            Input string from the user
+     *            Input string from the user.
      */
     public static List<TaskAttribute> split(String string) throws IllegalArgumentException {
         if (string == null) {

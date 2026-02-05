@@ -6,25 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class capable of storing multiple line of texts and display them as
- * chatbot's messages
+ * A class capable of storing multiple line of texts and display them as chatbot's messages.
  */
 public class Message {
     protected static final String LINING = "____________________________________________________________";
     protected List<String> messages;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     Message() {
         this.messages = new ArrayList<String>();
     }
 
     /**
-     * Instantiate a Message with a single line of text
+     * Instantiate a Message with a single line of text.
      * 
      * @param message
-     *            The message to be stored in the object
+     *            The message to be stored in the object.
      */
     public Message(String message) {
         // Preprocess the message
@@ -34,17 +33,17 @@ public class Message {
     }
 
     /**
-     * Instantiate a Message with a multiple lines of text
+     * Instantiate a Message with a multiple lines of text.
      * 
      * @param messages
-     *            The messages to be stored in the object
+     *            The messages to be stored in the object.
      */
     public Message(List<String> messages) {
         this.messages = messages;
     }
 
     /**
-     * Displays the message
+     * Displays the message.
      */
     public void display() {
         System.out.println(LINING);
@@ -55,14 +54,14 @@ public class Message {
     }
 
     /**
-     * Displays the message from another Message
+     * Displays the message from another Message.
      */
     public static void display(Message message) {
         message.display();
     }
 
     /**
-     * Displays a string as a message
+     * Displays a string as a message.
      */
     public static void display(String string) {
         Message message = new Message(string);
@@ -70,11 +69,11 @@ public class Message {
     }
 
     /**
-     * Gets message from the user
+     * Gets message from the user.
      * 
      * @param sc
-     *            Scanner from the chatbot
-     * @return Message inputted by the user
+     *            Scanner from the chatbot.
+     * @return Message inputted by the user.
      */
     public static UnitMessage getMessage(Scanner sc) {
         String message = sc.nextLine();
