@@ -44,10 +44,10 @@ public class TaskContainer extends Message {
      * @param startMessage
      *            Message before listing.
      */
-    public void displayCustom(String startMessage) {
+    public Message displayCustom(String startMessage) {
         Message output = this.toMessage();
         output.addFront(startMessage);
-        display(output);
+        return output;
     }
 
     /**
@@ -59,103 +59,103 @@ public class TaskContainer extends Message {
      * @param endMessage
      *            Message after listing.
      */
-    public void displayCustom(String startMessage, String endMessage) {
+    public Message displayCustom(String startMessage, String endMessage) {
         Message output = this.toMessage();
         output.addFront(startMessage);
         output.addBack(endMessage);
-        display(output);
+        return output;
     }
 
     /**
-     * Displays error message.
+     * Returns error message.
      */
-    private void displayInvalidIndexErrorMessage() {
+    private Message displayInvalidIndexErrorMessage() {
         Message invalidIndexErrorMessage = new Message("Sorry, I cannot do that. The index is invalid >.<");
-        display(invalidIndexErrorMessage);
+        return invalidIndexErrorMessage;
     }
 
     /**
-     * Displays error message.
+     * Returns error message.
      */
-    private void displayInvalidFormatErrorMessage() {
+    private Message displayInvalidFormatErrorMessage() {
         Message invalidFormatErrorMessage = new Message("Sorry, I cannot do that. The format is invalid >.<");
-        display(invalidFormatErrorMessage);
+        return invalidFormatErrorMessage;
     }
 
     /**
-     * Displays error message.
+     * Returns error message.
      */
-    private void displayInvalidPromptErrorMessage() {
+    private Message displayInvalidPromptErrorMessage() {
         Message invalidPromptErrorMessage = new Message("Sorry, I don't understand what you are saying >.<");
-        display(invalidPromptErrorMessage);
+        return invalidPromptErrorMessage;
     }
 
     /**
-     * Marks a task as done. Prints relevant messages.
+     * Marks a task as done. Returns relevant messages.
      * 
      * @param i
      *            The position of the task to be marked.
      */
-    public void markTask(int i) {
+    public Message markTask(int i) {
         i--;
         String whatever = "Nice! I've marked this task as done:";
         Task t = tasks.get(i);
         t.mark();
-        display(new Message(List.of(whatever, "  " + t.toString())));
+        return new Message(List.of(whatever, "  " + t.toString()));
     }
 
     /**
-     * Unmarks a task (as not done). Prints relevant messages.
+     * Unmarks a task (as not done). Returns relevant messages.
      * 
      * @param i
      *            The position of the task to be unmarked.
      */
-    public void unmarkTask(int i) {
+    public Message unmarkTask(int i) {
         i--;
         String whatever = "OK, I've marked this task as not done yet:";
         Task t = tasks.get(i);
         t.unmark();
-        display(new Message(List.of(whatever, "  " + t.toString())));
+        return new Message(List.of(whatever, "  " + t.toString()));
     }
 
     /**
-     * Lists the tasks in the TaskContainer.
+     * Returns the string that lists the tasks in the TaskContainer.
      */
-    public void listTask() {
+    public Message listTask() {
         String list = "Here are the tasks in your list:";
-        displayCustom(list);
+        return displayCustom(list);
     }
 
     /**
-     * Deletes a task. Prints relevant messages.
+     * Deletes a task. Returns relevant messages.
      * 
      * @param i
      *            The position of the task to be deleted.
      */
-    public void deleteTask(int i) {
+    public Message deleteTask(int i) {
         i--;
         String removeTask = "Noted. I've removed this task:";
         Task task = this.tasks.get(i);
         this.tasks.remove(i);
         String sizeReport = String.format("Now you have %d tasks in the list.", this.tasks.size());
-        display(new Message(List.of(removeTask, "  " + task.toString(), sizeReport)));
+        return new Message(List.of(removeTask, "  " + task.toString(), sizeReport));
     }
 
     /**
-     * Adds a task to the end of the list. Prints relevant messages.
+     * Adds a task to the end of the list. Returns relevant messages.
      * 
      * @param task
      *            Task to be added.
      */
-    public void addTask(Task task) {
+    public Message addTask(Task task) {
         String addTask = "Got it. I've added this task:";
         this.tasks.add(task);
         String sizeReport = String.format("Now you have %d tasks in the list.", this.tasks.size());
-        display(new Message(List.of(addTask, "  " + task.toString(), sizeReport)));
+        return new Message(List.of(addTask, "  " + task.toString(), sizeReport));
     }
 
     /**
-     * Adds task to the end of the list, without printing log messages.
+     * Adds task to the end of the list, without returning log messages.
      * 
      * @param task
      *            Task to be added.
@@ -164,7 +164,11 @@ public class TaskContainer extends Message {
         this.tasks.add(task);
     }
 
-    public void findTask(String keyword) {
+    /**
+     * Finds and displays tasks that contain the specified keyword in their description.
+     * @param keyword The sequence of characters to search for within the task list.
+     */
+    public Message findTask(String keyword) {
         final String trimmedKeyword = StringTrimmer.trim(keyword); // allowing user to accidentally add more spaces at
                                                                    // the end of command
 
@@ -181,7 +185,7 @@ public class TaskContainer extends Message {
             messages.addFront(noTaskFound);
         }
 
-        display(messages);
+        return messages;
     }
 
     /**
@@ -190,33 +194,35 @@ public class TaskContainer extends Message {
      * @param message
      *            Message to be processed.
      */
-    public void processQuery(UnitMessage message) {
+    public Message processQuery(UnitMessage message) {
         String string = message.toString();
         String prompt;
         String param = null;
         int split = string.length(); // handle corner case where there's actually no whitespace
 
-        for (int i = 0; i < string.length(); i++)
+        for (int i = 0; i < string.length(); i++) {
             if (string.charAt(i) == ' ') {
                 split = i;
                 break;
             }
+        }
 
         prompt = string.substring(0, split);
         if (split != string.length()) // handle corner case where there's actually no whitespace
             param = string.substring(split + 1);
 
+        Message out = null;
         switch (prompt) {
-        case "list" :
-            this.listTask();
+        case "list":
+            out = this.listTask();
             break;
-        case "find" :
-            this.findTask(param);
+        case "find":
+            out = this.findTask(param);
             break;
-        case "mark" :
+        case "mark":
             try {
                 Integer x = Integer.valueOf(param);
-                markTask(x);
+                out =  this.markTask(x);
             } catch (NumberFormatException e) {
                 displayInvalidIndexErrorMessage();
             } catch (IndexOutOfBoundsException e) {
@@ -224,10 +230,10 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        case "unmark" :
+        case "unmark":
             try {
                 Integer x = Integer.valueOf(param);
-                unmarkTask(x);
+                out = this.unmarkTask(x);
             } catch (NumberFormatException e) {
                 displayInvalidIndexErrorMessage();
             } catch (IndexOutOfBoundsException e) {
@@ -235,10 +241,10 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        case "delete" :
+        case "delete":
             try {
                 Integer x = Integer.valueOf(param);
-                deleteTask(x);
+                out = this.deleteTask(x);
             } catch (NumberFormatException e) {
                 displayInvalidIndexErrorMessage();
             } catch (IndexOutOfBoundsException e) {
@@ -246,36 +252,38 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        case "todo" :
+        case "todo":
+            System.out.println(prompt);
             try {
                 Todo task = Todo.produce(param);
-                addTask(task);
+                out = this.addTask(task);
             } catch (IllegalArgumentException e) {
                 displayInvalidFormatErrorMessage();
             } finally {
                 break;
             }
-        case "deadline" :
+        case "deadline":
             try {
                 Deadline task = Deadline.produce(param);
-                addTask(task);
+                out = this.addTask(task);
             } catch (IllegalArgumentException e) {
                 displayInvalidFormatErrorMessage();
             } finally {
                 break;
             }
-        case "event" :
+        case "event":
             try {
                 Event task = Event.produce(param);
-                addTask(task);
+                out = this.addTask(task);
             } catch (IllegalArgumentException e) {
                 displayInvalidFormatErrorMessage();
             } finally {
                 break;
             }
-        default :
-            displayInvalidPromptErrorMessage();
+        default:
+            out = displayInvalidPromptErrorMessage();
         }
+        return out;
     }
 
     /**

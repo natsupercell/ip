@@ -60,6 +60,10 @@ public class Hihihaha {
     private static final Message BYE_MESSAGE = new Message("Bye. Hope to see you again soon!");
     private static final Message BYE = new UnitMessage("bye");
 
+    public Hihihaha() {
+        start();
+    }
+
     /**
      * Activates the chatbot. Setups the essentials.
      */
@@ -87,10 +91,24 @@ public class Hihihaha {
         start();
         UnitMessage message = Message.getMessage(sc);
         while (!message.equals(BYE)) {
-            tc.processQuery(message);
+            Message.display(tc.processQuery(message));
             message = Message.getMessage(sc);
         }
         exit();
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        UnitMessage message = new UnitMessage(input);
+
+        if (!message.equals(BYE)) {
+            return tc.processQuery(message).toResponse();
+        }
+
+        exit();
+        return BYE_MESSAGE.toResponse();
     }
 
     public static void main(String[] args) {
