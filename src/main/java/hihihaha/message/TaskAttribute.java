@@ -48,9 +48,12 @@ public class TaskAttribute {
         if (string == null) {
             throw new IllegalArgumentException();
         }
+
         List<TaskAttribute> out = new ArrayList<TaskAttribute>();
+
         String attributeName = defaultAttributeName;
         String detail = "";
+
         for (int i = 0; i <= string.length(); i++) {
             if (i == string.length() || string.charAt(i) == '/') {
                 out.add(new TaskAttribute(attributeName, detail));
@@ -73,6 +76,7 @@ public class TaskAttribute {
             }
             detail += string.charAt(i);
         }
+
         return out;
     }
 

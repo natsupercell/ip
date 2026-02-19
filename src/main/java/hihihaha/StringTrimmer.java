@@ -7,6 +7,7 @@ public class StringTrimmer {
     public static String trim(String s) {
         int l = 0; // begin of new string
         int r = 0; // end of new string
+
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) != ' ') {
                 l = i;
@@ -19,6 +20,7 @@ public class StringTrimmer {
                 break;
             }
         }
+
         return s.substring(l, r);
     }
 }
