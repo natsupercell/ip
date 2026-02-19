@@ -69,8 +69,9 @@ public class Hihihaha {
      */
     public void start() {
         DataManager.initializeFile();
-        sc = new Scanner(System.in);
         tc = DataManager.read();
+        sc = new Scanner(System.in);
+
         Message.display(HI_MESSAGE);
     }
 
@@ -79,8 +80,9 @@ public class Hihihaha {
      */
     public void exit() {
         DataManager.save(tc);
-        Message.display(BYE_MESSAGE);
         sc.close();
+
+        Message.display(BYE_MESSAGE);
     }
 
     /**
@@ -89,11 +91,13 @@ public class Hihihaha {
      */
     public void run() {
         start();
+
         UnitMessage message = Message.getMessage(sc);
         while (!message.equals(BYE)) {
             Message.display(tc.processQuery(message));
             message = Message.getMessage(sc);
         }
+
         exit();
     }
 

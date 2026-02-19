@@ -30,6 +30,7 @@ public class Deadline extends Task {
     public static Deadline produce(String string) throws IllegalArgumentException {
         String attributeName1 = "by";
         List<TaskAttribute> list = TaskAttribute.split(string);
+
         if (list.size() != 2 || !list.get(1).getAttributeName().equals(attributeName1)) {
             throw new IllegalArgumentException();
         }

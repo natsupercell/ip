@@ -29,8 +29,10 @@ public class Todo extends Task {
      */
     public static Todo produce(String string) throws IllegalArgumentException {
         List<TaskAttribute> list = TaskAttribute.split(string);
-        if (list.size() != 1)
+        if (list.size() != 1) {
             throw new IllegalArgumentException();
+        }
+
         String task = StringTrimmer.trim(list.get(0).getDetail());
         return new Todo(task);
     }

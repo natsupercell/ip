@@ -98,9 +98,10 @@ public class TaskContainer extends Message {
      */
     public Message markTask(int i) {
         i--;
-        String whatever = "Nice! I've marked this task as done:";
         Task t = tasks.get(i);
         t.mark();
+
+        String whatever = "Nice! I've marked this task as done:";
         return new Message(List.of(whatever, "  " + t.toString()));
     }
 
@@ -112,9 +113,10 @@ public class TaskContainer extends Message {
      */
     public Message unmarkTask(int i) {
         i--;
-        String whatever = "OK, I've marked this task as not done yet:";
         Task t = tasks.get(i);
         t.unmark();
+
+        String whatever = "OK, I've marked this task as not done yet:";
         return new Message(List.of(whatever, "  " + t.toString()));
     }
 
@@ -134,9 +136,10 @@ public class TaskContainer extends Message {
      */
     public Message deleteTask(int i) {
         i--;
-        String removeTask = "Noted. I've removed this task:";
         Task task = this.tasks.get(i);
         this.tasks.remove(i);
+
+        String removeTask = "Noted. I've removed this task:";
         String sizeReport = String.format("Now you have %d tasks in the list.", this.tasks.size());
         return new Message(List.of(removeTask, "  " + task.toString(), sizeReport));
     }
@@ -148,8 +151,9 @@ public class TaskContainer extends Message {
      *            Task to be added.
      */
     public Message addTask(Task task) {
-        String addTask = "Got it. I've added this task:";
         this.tasks.add(task);
+
+        String addTask = "Got it. I've added this task:";
         String sizeReport = String.format("Now you have %d tasks in the list.", this.tasks.size());
         return new Message(List.of(addTask, "  " + task.toString(), sizeReport));
     }
@@ -283,6 +287,7 @@ public class TaskContainer extends Message {
         default:
             out = displayInvalidPromptErrorMessage();
         }
+
         return out;
     }
 
@@ -295,6 +300,7 @@ public class TaskContainer extends Message {
     public String toString() {
         String out = "";
         boolean isBeginning = true;
+
         for (Task task : tasks) {
             if (isBeginning) { // help removing unnecessary ends of line
                 isBeginning = false;
@@ -303,6 +309,7 @@ public class TaskContainer extends Message {
             }
             out += "\n" + task.taskToData();
         }
+
         return out;
     }
 }
