@@ -45,6 +45,10 @@ public class Deadline extends Task {
         }
     }
 
+    public LocalDateTime getBy() {
+        return by;
+    }
+
     @Override
     public String taskToData() {
         return "" + taskType + " || " + isDone + " || " + super.toString() + " || " + by.format(READ_FORMAT);

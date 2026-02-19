@@ -2,6 +2,7 @@ package hihihaha.message;
 
 import hihihaha.StringTrimmer;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,10 @@ public class TaskContainer extends Message {
 
     public TaskContainer(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    public int size() {
+        return tasks.size();
     }
 
     /**
@@ -193,6 +198,26 @@ public class TaskContainer extends Message {
     }
 
     /**
+     * Reminds user of upcoming deadlines.
+     */
+    public Message remind() {
+        LocalDateTime now = LocalDateTime.now();
+
+        TaskContainer result = new TaskContainer(tasks.stream()
+                .filter(task -> task instanceof Deadline)
+                .map(task -> (Deadline) task)
+                .filter(deadline -> deadline.getBy().isAfter(now))
+                .map(task -> (Task) task)
+                .toList());
+
+        String remind = String.format("You have %d upcoming deadlines", result.size());
+        Message messages = result.toMessage();
+        messages.addFront(remind);
+
+        return messages;
+    }
+
+    /**
      * Processes messages from the user input, and then makes actions based on that.
      * 
      * @param message
@@ -218,10 +243,15 @@ public class TaskContainer extends Message {
         Message out = null;
         switch (prompt) {
         case "list":
+            assert param == "";
             out = this.listTask();
             break;
         case "find":
             out = this.findTask(param);
+            break;
+        case "remind":
+            assert param == "";
+            out = this.remind();
             break;
         case "mark":
             try {
