@@ -74,7 +74,9 @@ public class Message {
 
     /**
      * Creates response for the new UI system.
-     * @return The output without default upper and lower lining, to adapt with new UI system.
+     * 
+     * @return The output without default upper and lower lining, to adapt with new
+     *         UI system.
      */
     public String toResponse() {
         String response = "";

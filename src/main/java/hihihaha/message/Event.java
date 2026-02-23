@@ -27,17 +27,18 @@ public class Event extends Task {
     /**
      * Creates an {@link Event} from the user's input.
      *
-     * @param string The string after the {@code event} command.
+     * @param string
+     *            The string after the {@code event} command.
      * @return A new {@link Event}.
-     * @throws IllegalArgumentException If the format is invalid or dates cannot be parsed.
+     * @throws IllegalArgumentException
+     *             If the format is invalid or dates cannot be parsed.
      */
     public static Event produce(String string) throws IllegalArgumentException {
         String attributeName1 = "from";
         String attributeName2 = "to";
 
         List<TaskAttribute> list = TaskAttribute.split(string);
-        if (list.size() != 3
-                || !list.get(1).getAttributeName().equals(attributeName1)
+        if (list.size() != 3 || !list.get(1).getAttributeName().equals(attributeName1)
                 || !list.get(2).getAttributeName().equals(attributeName2)) {
             throw new IllegalArgumentException();
         }
@@ -61,16 +62,13 @@ public class Event extends Task {
 
     @Override
     public String taskToData() {
-        return "" + taskType + " || " + isDone + " || " + super.toString()
-                + " || " + from.format(READ_FORMAT)
-                + " || " + to.format(READ_FORMAT);
+        return "" + taskType + " || " + isDone + " || " + super.toString() + " || " + from.format(READ_FORMAT) + " || "
+                + to.format(READ_FORMAT);
     }
 
     @Override
     public String toString() {
-        String text = String.format("%s (from: %s to: %s)",
-                super.toString(),
-                from.format(WRITE_FORMAT),
+        String text = String.format("%s (from: %s to: %s)", super.toString(), from.format(WRITE_FORMAT),
                 to.format(WRITE_FORMAT));
         return String.format("[%c][%c] %s", this.taskType, super.checker(), text);
     }

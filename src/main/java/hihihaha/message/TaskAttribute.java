@@ -19,7 +19,7 @@ public class TaskAttribute {
      * @param detail
      *            Detail of the attribute.
      */
-    TaskAttribute(String attributeName, String detail) {
+    TaskAttribute(String attributeName, String detail) throws IllegalArgumentException {
         this.attributeName = StringTrimmer.trim(attributeName); // handle exceptions from raw input
         this.detail = StringTrimmer.trim(detail);
     }

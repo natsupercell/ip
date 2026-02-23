@@ -174,8 +174,11 @@ public class TaskContainer extends Message {
     }
 
     /**
-     * Finds and displays tasks that contain the specified keyword in their description.
-     * @param keyword The sequence of characters to search for within the task list.
+     * Finds and displays tasks that contain the specified keyword in their
+     * description.
+     * 
+     * @param keyword
+     *            The sequence of characters to search for within the task list.
      */
     public Message findTask(String keyword) {
         final String trimmedKeyword = StringTrimmer.trim(keyword); // allowing user to accidentally add more spaces at
@@ -203,12 +206,9 @@ public class TaskContainer extends Message {
     public Message remind() {
         LocalDate now = LocalDate.now();
 
-        TaskContainer result = new TaskContainer(tasks.stream()
-                .filter(task -> task instanceof Deadline)
-                .map(task -> (Deadline) task)
-                .filter(deadline -> deadline.getBy().isAfter(now))
-                .map(task -> (Task) task)
-                .toList());
+        TaskContainer result = new TaskContainer(
+                tasks.stream().filter(task -> task instanceof Deadline).map(task -> (Deadline) task)
+                        .filter(deadline -> deadline.getBy().isAfter(now)).map(task -> (Task) task).toList());
 
         String remind = String.format("You have %d upcoming deadlines:", result.size());
         Message messages = result.toMessage();
@@ -243,28 +243,28 @@ public class TaskContainer extends Message {
 
         Message out = null;
         switch (prompt) {
-        case "list":
+        case "list" :
             if (!param.isBlank()) {
                 out = displayInvalidFormatErrorMessage();
                 break;
             }
             out = this.listTask();
             break;
-        case "find":
+        case "find" :
             if (param.isBlank()) {
                 out = displayInvalidFormatErrorMessage();
                 break;
             }
             out = this.findTask(param);
             break;
-        case "remind":
+        case "remind" :
             if (!param.isBlank()) {
                 out = displayInvalidFormatErrorMessage();
                 break;
             }
             out = this.remind();
             break;
-        case "mark":
+        case "mark" :
             try {
                 if (param.isBlank()) {
                     throw new NumberFormatException();
@@ -278,7 +278,7 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        case "unmark":
+        case "unmark" :
             try {
                 if (param.isBlank()) {
                     throw new NumberFormatException();
@@ -292,7 +292,7 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        case "delete":
+        case "delete" :
             try {
                 if (param.isBlank()) {
                     throw new NumberFormatException();
@@ -306,7 +306,7 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        case "todo":
+        case "todo" :
             try {
                 Todo task = Todo.produce(param);
                 out = this.addTask(task);
@@ -315,7 +315,7 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        case "deadline":
+        case "deadline" :
             try {
                 Deadline task = Deadline.produce(param);
                 out = this.addTask(task);
@@ -324,7 +324,7 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        case "event":
+        case "event" :
             try {
                 Event task = Event.produce(param);
                 out = this.addTask(task);
@@ -333,7 +333,7 @@ public class TaskContainer extends Message {
             } finally {
                 break;
             }
-        default:
+        default :
             out = displayInvalidPromptErrorMessage();
         }
 

@@ -31,7 +31,7 @@ public class Main extends Application {
             stage.setTitle("Hihihaha");
             stage.setMinWidth(360);
             stage.setMinHeight(520);
-            fxmlLoader.<MainWindow>getController().setChatBot(hihihaha);  // inject the Ui.Duke instance
+            fxmlLoader.<MainWindow>getController().setChatBot(hihihaha); // inject the Ui.Duke instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

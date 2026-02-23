@@ -16,19 +16,16 @@ public class EventTest {
 
     @Test
     public void produce_wrongAttributeOrder_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class,
-                () -> Event.produce("concert /to 21-11-2022 /from 20-11-2022"));
+        assertThrows(IllegalArgumentException.class, () -> Event.produce("concert /to 21-11-2022 /from 20-11-2022"));
     }
 
     @Test
     public void produce_fromAfterTo_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class,
-                () -> Event.produce("concert /from 22-11-2022 /to 21-11-2022"));
+        assertThrows(IllegalArgumentException.class, () -> Event.produce("concert /from 22-11-2022 /to 21-11-2022"));
     }
 
     @Test
     public void produce_wrongDateFormat_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class,
-                () -> Event.produce("concert /from 2022-11-20 /to 2022-11-21"));
+        assertThrows(IllegalArgumentException.class, () -> Event.produce("concert /from 2022-11-20 /to 2022-11-21"));
     }
 }

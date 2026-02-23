@@ -1,7 +1,5 @@
 package hihihaha.message;
 
-
-
 /**
  * An extension of Message class, capable of storing exactly one message.
  */

@@ -7,11 +7,12 @@ public class StringTrimmer {
     /**
      * Trims leading and trailing spaces from the given string.
      * <p>
-     * Note: This method only treats the space character ({@code ' '}) as
-     * whitespace (to keep behavior simple and predictable for iP).
+     * Note: This method only treats the space character ({@code ' '}) as whitespace
+     * (to keep behavior simple and predictable for iP).
      * </p>
      *
-     * @param s Input string.
+     * @param s
+     *            Input string.
      * @return The trimmed string.
      */
     public static String trim(String s) {

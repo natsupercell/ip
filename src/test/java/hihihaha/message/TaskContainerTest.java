@@ -16,9 +16,7 @@ public class TaskContainerTest {
         assertEquals(1, tc.size());
 
         Todo expectedTodo = new Todo("read book");
-        Message expected = new Message(List.of(
-                "Got it. I've added this task:",
-                "  " + expectedTodo.toString(),
+        Message expected = new Message(List.of("Got it. I've added this task:", "  " + expectedTodo.toString(),
                 "Now you have 1 tasks in the list:"));
         assertEquals(expected.toResponse(), out.toResponse());
     }

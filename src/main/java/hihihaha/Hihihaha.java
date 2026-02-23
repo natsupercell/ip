@@ -58,7 +58,8 @@ public class Hihihaha {
     private boolean hasShutdown;
     private static final String KURUMI = "Kurumiii <3";
     private static final String THE_GOAT = "Hihihahaaaaa";
-    private static final Message HI_MESSAGE = new Message(List.of("Hello! I'm " + KURUMI + ", the first servant of " + THE_GOAT, "What can I do for you?"));
+    private static final Message HI_MESSAGE = new Message(
+            List.of("Hello! I'm " + KURUMI + ", the first servant of " + THE_GOAT, "What can I do for you?"));
     private static final Message BYE_MESSAGE = new Message("Bye. Hope to see you again soon!");
     private static final Message BYE = new UnitMessage("bye");
 

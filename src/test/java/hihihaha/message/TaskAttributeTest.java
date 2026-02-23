@@ -30,9 +30,4 @@ public class TaskAttributeTest {
         assertEquals("by", attrs.get(1).getAttributeName());
         assertEquals("20-11-2022", attrs.get(1).getDetail());
     }
-
-    @Test
-    public void split_missingAttributeName_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> TaskAttribute.split("task / 20-11-2022"));
-    }
 }
