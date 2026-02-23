@@ -13,4 +13,9 @@ public class StringTrimmerTest {
     public void trim_stringWithGapInBetween_gapPersists() {
         assertEquals(StringTrimmer.trim(" a ba"), "a ba");
     }
+
+    @Test
+    public void trim_stringWithLeadingAndTrailingSpaces_spacesRemoved() {
+        assertEquals("abc", StringTrimmer.trim("   abc   "));
+    }
 }

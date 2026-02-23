@@ -1,36 +1,26 @@
 # Hihihaha
 
-> "I did not say this." – Sun Tzu ([source](https://example.com))
+Hihihaha is a lightweight task-tracking chatbot with a GUI.
 
-Hihihaha frees your mind of having to remember things you need to do. It's,
+* Add todos, deadlines, and events
+* Mark/unmark tasks
+* Find tasks by keyword
+* Remind yourself of upcoming deadlines
 
-* text-based
-* easy to learn
-* ~~FAST~~ _SUPER_ FAST to use
+## Getting started
 
-All you need to do is,
+1. Install **Java 17**.
+2. Run the fat JAR:
 
-1. download it from [here](https://example.com).
-2. double-click it.
-3. add your tasks.
-4. let it manage your tasks for you 😉
+   ```bash
+   java -jar hihihaha.jar
+   ```
 
-And it is **FREE**!
+3. Type commands in the input box and press **Enter**.
 
-Features:
+Tasks are saved automatically to `data/task.txt` when you exit (type `bye` or close the window).
 
-- [x] Managing tasks
-- [x] Managing deadlines 
-- [ ] Reminders (coming soon)
+## User guide
 
----
+See the full user guide (with command syntax and examples) in `docs/index.md`.
 
-If you are a Java programmer, you can use it to practice Java too. Here's the `main` method:
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        Application.launch(MainApp.class, args);
-    }
-}
-```

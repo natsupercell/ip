@@ -37,6 +37,10 @@ public class Deadline extends Task {
         String task = StringTrimmer.trim(list.get(0).getDetail());
         String byString = StringTrimmer.trim(list.get(1).getDetail());
 
+        if (task.isBlank() || byString.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
         try {
             LocalDate by = LocalDate.parse(byString, Task.READ_FORMAT);
             return new Deadline(task, by);

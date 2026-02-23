@@ -55,36 +55,58 @@ import java.util.Scanner;
 public class Hihihaha {
     private Scanner sc;
     private TaskContainer tc;
+    private boolean hasShutdown;
+    private static final String KURUMI = "Kurumiii <3";
     private static final String THE_GOAT = "Hihihahaaaaa";
-    private static final Message HI_MESSAGE = new Message(List.of("Hello! I'm " + THE_GOAT, "What can I do for you?"));
+    private static final Message HI_MESSAGE = new Message(List.of("Hello! I'm " + KURUMI + ", the first servant of " + THE_GOAT, "What can I do for you?"));
     private static final Message BYE_MESSAGE = new Message("Bye. Hope to see you again soon!");
     private static final Message BYE = new UnitMessage("bye");
-    private boolean hasShutdown = false;
 
+    public Hihihaha() {
+        initialize();
+    }
+
+    /**
+     * Initializes the chatbot by loading persisted data.
+     * <p>
+     * Note: This method does not print welcome messages. The caller (Text UI or
+     * GUI) is responsible for showing the welcome message in the appropriate UI.
+     * </p>
+     */
+    public void initialize() {
+        DataManager.initializeFile();
+        tc = DataManager.read();
+    }
+
+    /**
+     * @return The welcome message to be shown when the app starts.
+     */
+    public String getWelcomeMessage() {
+        return HI_MESSAGE.toResponse();
+    }
+
+    /**
+     * @return The goodbye message to be shown when the app exits.
+     */
+    public String getGoodbyeMessage() {
+        return BYE_MESSAGE.toResponse();
+    }
+
+    /**
+     * Saves the current state and releases resources. Safe to call multiple times.
+     */
     public void shutdown() {
         if (hasShutdown) {
             return;
         }
         hasShutdown = true;
-
-        DataManager.save(tc);
-
+        if (tc != null) {
+            DataManager.save(tc);
+        }
         if (sc != null) {
             sc.close();
+            sc = null;
         }
-    }
-
-    public Hihihaha() {
-        start();
-    }
-
-    /**
-     * Activates the chatbot. Setups the essentials.
-     */
-    public void start() {
-        DataManager.initializeFile();
-        tc = DataManager.read();
-        sc = new Scanner(System.in);
     }
 
     /**
@@ -92,7 +114,7 @@ public class Hihihaha {
      */
     public void exit() {
         shutdown();
-        Message.display(BYE_MESSAGE); // console version
+        Message.display(BYE_MESSAGE);
     }
 
     /**
@@ -100,7 +122,8 @@ public class Hihihaha {
      * the messages.
      */
     public void run() {
-        start();
+        sc = new Scanner(System.in);
+        Message.display(HI_MESSAGE);
 
         UnitMessage message = Message.getMessage(sc);
         while (!message.equals(BYE)) {
@@ -121,13 +144,9 @@ public class Hihihaha {
             return tc.processQuery(message).toResponse();
         }
 
-        // For GUI usage: save but do not print to console
+        // GUI needs the goodbye text but should control when to close the window.
         shutdown();
-        return BYE_MESSAGE.toResponse();
-    }
-
-    public String getWelcomeMessage() {
-        return HI_MESSAGE.toResponse();
+        return getGoodbyeMessage();
     }
 
     public static void main(String[] args) {

@@ -5,6 +5,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+/**
+ * A task that happens during a time period (represented as a date range).
+ */
 public class Event extends Task {
     private static final char SIGNATURE = 'E';
     private final LocalDate from;
@@ -13,10 +16,21 @@ public class Event extends Task {
     Event(String task, LocalDate from, LocalDate to) {
         super(task);
         this.taskType = SIGNATURE;
+
+        if (from.isAfter(to)) {
+            throw new IllegalArgumentException();
+        }
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * Creates an {@link Event} from the user's input.
+     *
+     * @param string The string after the {@code event} command.
+     * @return A new {@link Event}.
+     * @throws IllegalArgumentException If the format is invalid or dates cannot be parsed.
+     */
     public static Event produce(String string) throws IllegalArgumentException {
         String attributeName1 = "from";
         String attributeName2 = "to";
@@ -31,6 +45,10 @@ public class Event extends Task {
         String task = StringTrimmer.trim(list.get(0).getDetail());
         String fromString = StringTrimmer.trim(list.get(1).getDetail());
         String toString = StringTrimmer.trim(list.get(2).getDetail());
+
+        if (task.isBlank() || fromString.isBlank() || toString.isBlank()) {
+            throw new IllegalArgumentException();
+        }
 
         try {
             LocalDate from = LocalDate.parse(fromString, Task.READ_FORMAT);

@@ -34,6 +34,9 @@ public class Todo extends Task {
         }
 
         String task = StringTrimmer.trim(list.get(0).getDetail());
+        if (task.isBlank()) {
+            throw new IllegalArgumentException();
+        }
         return new Todo(task);
     }
 

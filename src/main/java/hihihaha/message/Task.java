@@ -13,7 +13,7 @@ public abstract class Task extends UnitMessage {
     protected static final DateTimeFormatter WRITE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
     protected char taskType;
     protected boolean isDone;
-    private static final String HARD_SPLITTER = "\\s*\\|\\|\\s*";;
+    private static final String HARD_SPLITTER = "\\s*\\|\\|\\s*";
 
     /**
      * Instantiates a Task.
@@ -139,7 +139,6 @@ public abstract class Task extends UnitMessage {
      *         {@code false} otherwise.
      */
     public boolean nameContains(String keyword) {
-        System.out.println(super.toString());
         return super.toString().contains(keyword);
     }
 }

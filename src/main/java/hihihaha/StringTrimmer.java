@@ -4,6 +4,16 @@ package hihihaha;
  * Utility class, used to trim off excess whitespace of a string.
  */
 public class StringTrimmer {
+    /**
+     * Trims leading and trailing spaces from the given string.
+     * <p>
+     * Note: This method only treats the space character ({@code ' '}) as
+     * whitespace (to keep behavior simple and predictable for iP).
+     * </p>
+     *
+     * @param s Input string.
+     * @return The trimmed string.
+     */
     public static String trim(String s) {
         int l = 0; // begin of new string
         int r = 0; // end of new string

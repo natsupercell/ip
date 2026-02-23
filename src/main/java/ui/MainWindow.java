@@ -12,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 /**
  * Controller for the main GUI.
- * Built with the help of ChatGPT.
  */
 public class MainWindow extends AnchorPane {
     @FXML
@@ -26,9 +25,9 @@ public class MainWindow extends AnchorPane {
 
     private Hihihaha hihihaha;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
-
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
+    private final Image kurumiImage = new Image(MainWindow.class.getResourceAsStream("/images/Kurumi.png"));
+    private final Image flusteredKurumiImage = new Image(MainWindow.class.getResourceAsStream("/images/FlusteredKurumi.png"));
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
@@ -38,10 +37,9 @@ public class MainWindow extends AnchorPane {
     public void setChatBot(Hihihaha hihihaha) {
         this.hihihaha = hihihaha;
 
-        // Show the startup message in the GUI
-        dialogContainer.getChildren().add(
-                DialogBox.getDukeDialog(hihihaha.getWelcomeMessage(), dukeImage)
-        );
+        // Display startup messages in GUI.
+        String welcome = hihihaha.getWelcomeMessage().stripTrailing();
+        dialogContainer.getChildren().add(DialogBox.getDukeDialog(welcome, kurumiImage));
     }
 
     /**
@@ -54,24 +52,16 @@ public class MainWindow extends AnchorPane {
         String response = hihihaha.getResponse(input);
 
         boolean isBye = input != null && input.trim().equalsIgnoreCase("bye");
-
-        // Keep red error bubbles ONLY when it’s an actual error.
-        // (Exclude "bye" so it never becomes red even if your bye message format changes.)
-        boolean isError = !isBye
-                && response != null
-                && response.startsWith("Sorry");  // adjust prefix if yours differs
+        boolean isError = !isBye && response != null && response.stripLeading().startsWith("Sorry");
 
         dialogContainer.getChildren().add(DialogBox.getUserDialog(input, userImage));
-
-        if (isError) {
-            dialogContainer.getChildren().add(DialogBox.getErrorDialog(response, dukeImage));
-        } else {
-            dialogContainer.getChildren().add(DialogBox.getDukeDialog(response, dukeImage));
-        }
-
+        dialogContainer.getChildren().add(
+                isError
+                        ? DialogBox.getErrorDialog(response, flusteredKurumiImage)
+                        : DialogBox.getDukeDialog(response, kurumiImage)
+        );
         userInput.clear();
 
-        // Exit after showing the goodbye message
         if (isBye) {
             userInput.setDisable(true);
             sendButton.setDisable(true);

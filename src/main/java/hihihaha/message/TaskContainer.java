@@ -21,6 +21,9 @@ public class TaskContainer extends Message {
         this.tasks = tasks;
     }
 
+    /**
+     * @return Number of tasks currently stored.
+     */
     public int size() {
         return tasks.size();
     }
@@ -223,7 +226,7 @@ public class TaskContainer extends Message {
     public Message processQuery(UnitMessage message) {
         String string = message.toString();
         String prompt;
-        String param = null;
+        String param = "";
         int split = string.length(); // handle corner case where there's actually no whitespace
 
         for (int i = 0; i < string.length(); i++) {
@@ -234,24 +237,38 @@ public class TaskContainer extends Message {
         }
 
         prompt = string.substring(0, split);
-        if (split != string.length()) // handle corner case where there's actually no whitespace
+        if (split != string.length()) { // handle corner case where there's actually no whitespace
             param = string.substring(split + 1);
+        }
 
         Message out = null;
         switch (prompt) {
         case "list":
-            assert param == "";
+            if (!param.isBlank()) {
+                out = displayInvalidFormatErrorMessage();
+                break;
+            }
             out = this.listTask();
             break;
         case "find":
+            if (param.isBlank()) {
+                out = displayInvalidFormatErrorMessage();
+                break;
+            }
             out = this.findTask(param);
             break;
         case "remind":
-            assert param == "";
+            if (!param.isBlank()) {
+                out = displayInvalidFormatErrorMessage();
+                break;
+            }
             out = this.remind();
             break;
         case "mark":
             try {
+                if (param.isBlank()) {
+                    throw new NumberFormatException();
+                }
                 Integer x = Integer.valueOf(param);
                 out = this.markTask(x);
             } catch (NumberFormatException e) {
@@ -263,6 +280,9 @@ public class TaskContainer extends Message {
             }
         case "unmark":
             try {
+                if (param.isBlank()) {
+                    throw new NumberFormatException();
+                }
                 Integer x = Integer.valueOf(param);
                 out = this.unmarkTask(x);
             } catch (NumberFormatException e) {
@@ -274,6 +294,9 @@ public class TaskContainer extends Message {
             }
         case "delete":
             try {
+                if (param.isBlank()) {
+                    throw new NumberFormatException();
+                }
                 Integer x = Integer.valueOf(param);
                 out = this.deleteTask(x);
             } catch (NumberFormatException e) {
@@ -284,7 +307,6 @@ public class TaskContainer extends Message {
                 break;
             }
         case "todo":
-            System.out.println(prompt);
             try {
                 Todo task = Todo.produce(param);
                 out = this.addTask(task);

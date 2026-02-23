@@ -1,4 +1,2 @@
+T || false || hihi
 T || false || hehe
-D || false || hihi || 20-11-2022
-E || false || haha || 20-11-2023 || 21-11-2023
-D || false || hihihaha || 01-01-2027
