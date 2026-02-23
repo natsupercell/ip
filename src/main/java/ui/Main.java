@@ -11,7 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Ui.Duke using FXML.
+ * A GUI for Hihihaha using FXML.
+ * Built with the help of ChatGPT.
  */
 public class Main extends Application {
 
@@ -22,12 +23,30 @@ public class Main extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
+
             Scene scene = new Scene(ap);
+            scene.getStylesheets().add(
+                    Main.class.getResource("/view/styles.css").toExternalForm()
+            );
+
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setChatBot(hihihaha);  // inject the Ui.Duke instance
+
+            // Allow resizing but prevent too small window
+            stage.setMinWidth(360);
+            stage.setMinHeight(520);
+
+            fxmlLoader.<MainWindow>getController().setChatBot(hihihaha);
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void stop() {
+        if (hihihaha != null) {
+            hihihaha.shutdown();
         }
     }
 }

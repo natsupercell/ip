@@ -13,12 +13,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
  * and a label containing text from the speaker.
+ * Built with the help of ChatGPT.
  */
+
 public class DialogBox extends HBox {
+
     @FXML
     private Label dialog;
     @FXML
@@ -26,7 +30,8 @@ public class DialogBox extends HBox {
 
     private DialogBox(String text, Image img) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
@@ -34,26 +39,43 @@ public class DialogBox extends HBox {
             e.printStackTrace();
         }
 
+        // Styling hooks
+        this.getStyleClass().add("dialog-box");
+        dialog.getStyleClass().add("bubble");
+
         dialog.setText(text);
         displayPicture.setImage(img);
+
+        // Circular avatar
+        double radius = displayPicture.getFitWidth() / 2.0;
+        Circle clip = new Circle(radius, radius, radius);
+        displayPicture.setClip(clip);
     }
 
-    /**
-     * Flips the dialog box such that the ImageView is on the left and text on the right.
-     */
     private void flip() {
-        ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
+        ObservableList<Node> tmp =
+                FXCollections.observableArrayList(this.getChildren());
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
+        db.getStyleClass().add("user");
+        return db;
     }
 
     public static DialogBox getDukeDialog(String text, Image img) {
-        var db = new DialogBox(text, img);
+        DialogBox db = new DialogBox(text, img);
+        db.getStyleClass().add("bot");
+        db.flip();
+        return db;
+    }
+
+    public static DialogBox getErrorDialog(String text, Image img) {
+        DialogBox db = new DialogBox(text, img);
+        db.getStyleClass().addAll("bot", "error");
         db.flip();
         return db;
     }

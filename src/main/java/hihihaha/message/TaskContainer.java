@@ -2,12 +2,9 @@ package hihihaha.message;
 
 import hihihaha.StringTrimmer;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-// TODO: update core methods: mark, unmark, etc
-// TODO: using the newly built and more robust displayCustom and message manipulation methods
 
 /**
  * A class used to store and manage Tasks. Provides core task manipulation logic
@@ -145,7 +142,7 @@ public class TaskContainer extends Message {
         this.tasks.remove(i);
 
         String removeTask = "Noted. I've removed this task:";
-        String sizeReport = String.format("Now you have %d tasks in the list.", this.tasks.size());
+        String sizeReport = String.format("Now you have %d tasks in the list:", this.tasks.size());
         return new Message(List.of(removeTask, "  " + task.toString(), sizeReport));
     }
 
@@ -159,7 +156,7 @@ public class TaskContainer extends Message {
         this.tasks.add(task);
 
         String addTask = "Got it. I've added this task:";
-        String sizeReport = String.format("Now you have %d tasks in the list.", this.tasks.size());
+        String sizeReport = String.format("Now you have %d tasks in the list:", this.tasks.size());
         return new Message(List.of(addTask, "  " + task.toString(), sizeReport));
     }
 
@@ -201,7 +198,7 @@ public class TaskContainer extends Message {
      * Reminds user of upcoming deadlines.
      */
     public Message remind() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDate.now();
 
         TaskContainer result = new TaskContainer(tasks.stream()
                 .filter(task -> task instanceof Deadline)
@@ -210,7 +207,7 @@ public class TaskContainer extends Message {
                 .map(task -> (Task) task)
                 .toList());
 
-        String remind = String.format("You have %d upcoming deadlines", result.size());
+        String remind = String.format("You have %d upcoming deadlines:", result.size());
         Message messages = result.toMessage();
         messages.addFront(remind);
 
@@ -256,11 +253,11 @@ public class TaskContainer extends Message {
         case "mark":
             try {
                 Integer x = Integer.valueOf(param);
-                out =  this.markTask(x);
+                out = this.markTask(x);
             } catch (NumberFormatException e) {
-                displayInvalidIndexErrorMessage();
+                out = displayInvalidIndexErrorMessage();
             } catch (IndexOutOfBoundsException e) {
-                displayInvalidIndexErrorMessage();
+                out = displayInvalidIndexErrorMessage();
             } finally {
                 break;
             }
@@ -269,9 +266,9 @@ public class TaskContainer extends Message {
                 Integer x = Integer.valueOf(param);
                 out = this.unmarkTask(x);
             } catch (NumberFormatException e) {
-                displayInvalidIndexErrorMessage();
+                out = displayInvalidIndexErrorMessage();
             } catch (IndexOutOfBoundsException e) {
-                displayInvalidIndexErrorMessage();
+                out = displayInvalidIndexErrorMessage();
             } finally {
                 break;
             }
@@ -280,9 +277,9 @@ public class TaskContainer extends Message {
                 Integer x = Integer.valueOf(param);
                 out = this.deleteTask(x);
             } catch (NumberFormatException e) {
-                displayInvalidIndexErrorMessage();
+                out = displayInvalidIndexErrorMessage();
             } catch (IndexOutOfBoundsException e) {
-                displayInvalidIndexErrorMessage();
+                out = displayInvalidIndexErrorMessage();
             } finally {
                 break;
             }
@@ -292,7 +289,7 @@ public class TaskContainer extends Message {
                 Todo task = Todo.produce(param);
                 out = this.addTask(task);
             } catch (IllegalArgumentException e) {
-                displayInvalidFormatErrorMessage();
+                out = displayInvalidFormatErrorMessage();
             } finally {
                 break;
             }
@@ -301,7 +298,7 @@ public class TaskContainer extends Message {
                 Deadline task = Deadline.produce(param);
                 out = this.addTask(task);
             } catch (IllegalArgumentException e) {
-                displayInvalidFormatErrorMessage();
+                out = displayInvalidFormatErrorMessage();
             } finally {
                 break;
             }
@@ -310,7 +307,7 @@ public class TaskContainer extends Message {
                 Event task = Event.produce(param);
                 out = this.addTask(task);
             } catch (IllegalArgumentException e) {
-                displayInvalidFormatErrorMessage();
+                out = displayInvalidFormatErrorMessage();
             } finally {
                 break;
             }

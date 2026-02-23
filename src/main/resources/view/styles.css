@@ -1,0 +1,85 @@
+/*
+ * Made by ChatGPT.
+ * A-BetterGui styling for Hihihaha.
+ * Implements:
+ * - Asymmetric chat UI
+ * - Error highlighting
+ * - Better spacing & typography
+ * - Responsive layout
+ */
+
+.root {
+    -fx-font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f6f7fb;
+}
+
+/* Scroll pane blends into background */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Space between chat bubbles */
+.dialog-container {
+    -fx-padding: 12 12 12 12;
+    -fx-spacing: 10;
+}
+
+/* Each message container */
+.dialog-box {
+    -fx-padding: 2 0 2 0;
+}
+
+/* Message bubble */
+.bubble {
+    -fx-padding: 10 12 10 12;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-max-width: 280px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 12, 0.2, 0, 2);
+}
+
+/* User bubble (right side, blue) */
+.user .bubble {
+    -fx-background-color: #d7ebff;
+    -fx-text-fill: #102a43;
+}
+
+/* Bot bubble (left side, white card) */
+.bot .bubble {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #243b53;
+    -fx-border-color: #d9e2ec;
+    -fx-border-width: 1;
+}
+
+/* Error bubble (pink highlight) */
+.error .bubble {
+    -fx-background-color: #ffd6eb;   /* soft pink background */
+    -fx-text-fill: #7a0f3f;          /* darker pink text */
+    -fx-border-color: #ff9ecf;       /* pink border */
+    -fx-border-width: 1;
+}
+
+/* Bottom input bar */
+.input-bar {
+    -fx-padding: 10;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d9e2ec;
+    -fx-border-width: 1 0 0 0;
+}
+
+.text-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 8 10 8 10;
+}
+
+.button {
+    -fx-background-radius: 10;
+    -fx-padding: 8 14 8 14;
+}

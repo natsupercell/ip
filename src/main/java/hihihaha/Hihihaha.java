@@ -59,6 +59,20 @@ public class Hihihaha {
     private static final Message HI_MESSAGE = new Message(List.of("Hello! I'm " + THE_GOAT, "What can I do for you?"));
     private static final Message BYE_MESSAGE = new Message("Bye. Hope to see you again soon!");
     private static final Message BYE = new UnitMessage("bye");
+    private boolean hasShutdown = false;
+
+    public void shutdown() {
+        if (hasShutdown) {
+            return;
+        }
+        hasShutdown = true;
+
+        DataManager.save(tc);
+
+        if (sc != null) {
+            sc.close();
+        }
+    }
 
     public Hihihaha() {
         start();
@@ -71,18 +85,14 @@ public class Hihihaha {
         DataManager.initializeFile();
         tc = DataManager.read();
         sc = new Scanner(System.in);
-
-        Message.display(HI_MESSAGE);
     }
 
     /**
      * Terminates the chatbot. Saves data to hard disk.
      */
     public void exit() {
-        DataManager.save(tc);
-        sc.close();
-
-        Message.display(BYE_MESSAGE);
+        shutdown();
+        Message.display(BYE_MESSAGE); // console version
     }
 
     /**
@@ -111,8 +121,13 @@ public class Hihihaha {
             return tc.processQuery(message).toResponse();
         }
 
-        exit();
+        // For GUI usage: save but do not print to console
+        shutdown();
         return BYE_MESSAGE.toResponse();
+    }
+
+    public String getWelcomeMessage() {
+        return HI_MESSAGE.toResponse();
     }
 
     public static void main(String[] args) {

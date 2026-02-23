@@ -2,7 +2,7 @@ package hihihaha.message;
 
 import hihihaha.StringTrimmer;
 import java.util.List;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 /**
@@ -10,9 +10,9 @@ import java.time.format.DateTimeParseException;
  */
 public class Deadline extends Task {
     private static final char SIGNATURE = 'D';
-    private LocalDateTime by;
+    private LocalDate by;
 
-    Deadline(String task, LocalDateTime by) {
+    Deadline(String task, LocalDate by) {
         super(task);
         this.taskType = SIGNATURE;
         this.by = by;
@@ -38,14 +38,14 @@ public class Deadline extends Task {
         String byString = StringTrimmer.trim(list.get(1).getDetail());
 
         try {
-            LocalDateTime by = LocalDateTime.parse(byString, Task.READ_FORMAT);
+            LocalDate by = LocalDate.parse(byString, Task.READ_FORMAT);
             return new Deadline(task, by);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException();
         }
     }
 
-    public LocalDateTime getBy() {
+    public LocalDate getBy() {
         return by;
     }
 

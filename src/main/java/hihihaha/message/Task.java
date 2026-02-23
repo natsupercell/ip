@@ -1,6 +1,6 @@
 package hihihaha.message;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -9,11 +9,11 @@ import java.time.format.DateTimeParseException;
  * related to task management. Provides core task manipulation logic.
  */
 public abstract class Task extends UnitMessage {
-    protected static final DateTimeFormatter READ_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-    protected static final DateTimeFormatter WRITE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm");
+    protected static final DateTimeFormatter READ_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    protected static final DateTimeFormatter WRITE_FORMAT = DateTimeFormatter.ofPattern("dd MMM yyyy");
     protected char taskType;
     protected boolean isDone;
-    private static final String HARD_SPLITTER = " \\|\\| ";
+    private static final String HARD_SPLITTER = "\\s*\\|\\|\\s*";;
 
     /**
      * Instantiates a Task.
@@ -73,15 +73,15 @@ public abstract class Task extends UnitMessage {
                 break;
             case "D" :
                 try {
-                    task = new Deadline(taskString, LocalDateTime.parse(params[3], READ_FORMAT));
+                    task = new Deadline(taskString, LocalDate.parse(params[3], READ_FORMAT));
                 } catch (DateTimeParseException e) {
                     throw new IllegalArgumentException();
                 }
                 break;
             case "E" :
                 try {
-                    task = new Event(taskString, LocalDateTime.parse(params[3], READ_FORMAT),
-                            LocalDateTime.parse(params[4], READ_FORMAT));
+                    task = new Event(taskString, LocalDate.parse(params[3], READ_FORMAT),
+                            LocalDate.parse(params[4], READ_FORMAT));
                 } catch (DateTimeParseException e) {
                     throw new IllegalArgumentException();
                 }
@@ -139,6 +139,7 @@ public abstract class Task extends UnitMessage {
      *         {@code false} otherwise.
      */
     public boolean nameContains(String keyword) {
-        return this.toString().contains(keyword);
+        System.out.println(super.toString());
+        return super.toString().contains(keyword);
     }
 }
