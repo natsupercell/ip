@@ -316,7 +316,7 @@ public class TaskContainer extends Message {
 
         prompt = string.substring(0, split);
         if (split != string.length()) { // handle corner case where there's actually no whitespace
-            param = string.substring(split + 1);
+            param = string.substring(split + 1).trim();
         }
 
         return List.<String>of(prompt, param);
