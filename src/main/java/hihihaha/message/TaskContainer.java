@@ -75,24 +75,21 @@ public class TaskContainer extends Message {
      * Returns error message.
      */
     private Message displayInvalidIndexErrorMessage() {
-        Message invalidIndexErrorMessage = new Message("Sorry, I cannot do that. The index is invalid >.<");
-        return invalidIndexErrorMessage;
+        return new Message("Sorry, I cannot do that. The index is invalid >.<");
     }
 
     /**
      * Returns error message.
      */
     private Message displayInvalidFormatErrorMessage() {
-        Message invalidFormatErrorMessage = new Message("Sorry, I cannot do that. The format is invalid >.<");
-        return invalidFormatErrorMessage;
+        return new Message("Sorry, I cannot do that. The format is invalid >.<");
     }
 
     /**
      * Returns error message.
      */
     private Message displayInvalidPromptErrorMessage() {
-        Message invalidPromptErrorMessage = new Message("Sorry, I don't understand what you are saying >.<");
-        return invalidPromptErrorMessage;
+        return new Message("Sorry, I don't understand what you are saying >.<");
     }
 
     /**
@@ -103,11 +100,11 @@ public class TaskContainer extends Message {
      */
     public Message markTask(int i) {
         i--;
-        Task t = tasks.get(i);
-        t.mark();
+        Task task = tasks.get(i);
+        task.mark();
 
         String whatever = "Nice! I've marked this task as done:";
-        return new Message(List.of(whatever, "  " + t.toString()));
+        return new Message(List.of(whatever, "  " + task.toString()));
     }
 
     /**
@@ -118,11 +115,11 @@ public class TaskContainer extends Message {
      */
     public Message unmarkTask(int i) {
         i--;
-        Task t = tasks.get(i);
-        t.unmark();
+        Task task = tasks.get(i);
+        task.unmark();
 
         String whatever = "OK, I've marked this task as not done yet:";
-        return new Message(List.of(whatever, "  " + t.toString()));
+        return new Message(List.of(whatever, "  " + task.toString()));
     }
 
     /**
@@ -217,13 +214,94 @@ public class TaskContainer extends Message {
         return messages;
     }
 
-    /**
-     * Processes messages from the user input, and then makes actions based on that.
-     * 
-     * @param message
-     *            Message to be processed.
-     */
-    public Message processQuery(UnitMessage message) {
+    private Message processListQuery(String param) {
+        if (!param.isBlank()) {
+            return displayInvalidFormatErrorMessage();
+        }
+
+        return listTask();
+    }
+
+    private Message processFindQuery(String param) {
+        if (param.isBlank()) {
+            return displayInvalidFormatErrorMessage();
+        }
+
+        return findTask(param);
+    }
+
+    private Message processRemindQuery(String param) {
+        if (!param.isBlank()) {
+            return displayInvalidFormatErrorMessage();
+        }
+
+        return remind();
+    }
+
+    private Message processMarkQuery(String param) {
+        try {
+            if (param.isBlank()) {
+                throw new NumberFormatException();
+            }
+            int x = Integer.parseInt(param);
+            return this.markTask(x);
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            return displayInvalidIndexErrorMessage();
+        }
+    }
+
+    private Message processUnmarkQuery(String param) {
+        try {
+            if (param.isBlank()) {
+                throw new NumberFormatException();
+            }
+            int x = Integer.valueOf(param);
+            return this.unmarkTask(x);
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            return displayInvalidIndexErrorMessage();
+        }
+    }
+
+    private Message processDeleteQuery(String param) {
+        try {
+            if (param.isBlank()) {
+                throw new NumberFormatException();
+            }
+            int x = Integer.parseInt(param);
+            return this.deleteTask(x);
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            return displayInvalidIndexErrorMessage();
+        }
+    }
+
+    private Message processTodoQuery(String param) {
+        try {
+            Todo task = Todo.produce(param);
+            return this.addTask(task);
+        } catch (IllegalArgumentException e) {
+            return displayInvalidFormatErrorMessage();
+        }
+    }
+
+    private Message processDeadlineQuery(String param) {
+        try {
+            Deadline task = Deadline.produce(param);
+            return this.addTask(task);
+        } catch (IllegalArgumentException e) {
+            return displayInvalidFormatErrorMessage();
+        }
+    }
+
+    private Message processEventQuery(String param) {
+        try {
+            Event task = Event.produce(param);
+            return this.addTask(task);
+        } catch (IllegalArgumentException e) {
+            return displayInvalidFormatErrorMessage();
+        }
+    }
+
+    private List<String> getArgs(UnitMessage message) {
         String string = message.toString();
         String prompt;
         String param = "";
@@ -241,103 +319,42 @@ public class TaskContainer extends Message {
             param = string.substring(split + 1);
         }
 
-        Message out = null;
+        return List.<String>of(prompt, param);
+    }
+
+    /**
+     * Processes messages from the user input, and then makes actions based on that.
+     * 
+     * @param message
+     *            Message to be processed.
+     */
+    public Message processQuery(UnitMessage message) {
+        List<String> args = getArgs(message);
+        String prompt = args.get(0);
+        String param = args.get(1);
+
         switch (prompt) {
         case "list" :
-            if (!param.isBlank()) {
-                out = displayInvalidFormatErrorMessage();
-                break;
-            }
-            out = this.listTask();
-            break;
+            return processListQuery(param);
         case "find" :
-            if (param.isBlank()) {
-                out = displayInvalidFormatErrorMessage();
-                break;
-            }
-            out = this.findTask(param);
-            break;
+            return processFindQuery(param);
         case "remind" :
-            if (!param.isBlank()) {
-                out = displayInvalidFormatErrorMessage();
-                break;
-            }
-            out = this.remind();
-            break;
+            return processRemindQuery(param);
         case "mark" :
-            try {
-                if (param.isBlank()) {
-                    throw new NumberFormatException();
-                }
-                Integer x = Integer.valueOf(param);
-                out = this.markTask(x);
-            } catch (NumberFormatException e) {
-                out = displayInvalidIndexErrorMessage();
-            } catch (IndexOutOfBoundsException e) {
-                out = displayInvalidIndexErrorMessage();
-            } finally {
-                break;
-            }
+            return processMarkQuery(param);
         case "unmark" :
-            try {
-                if (param.isBlank()) {
-                    throw new NumberFormatException();
-                }
-                Integer x = Integer.valueOf(param);
-                out = this.unmarkTask(x);
-            } catch (NumberFormatException e) {
-                out = displayInvalidIndexErrorMessage();
-            } catch (IndexOutOfBoundsException e) {
-                out = displayInvalidIndexErrorMessage();
-            } finally {
-                break;
-            }
+            return processUnmarkQuery(param);
         case "delete" :
-            try {
-                if (param.isBlank()) {
-                    throw new NumberFormatException();
-                }
-                Integer x = Integer.valueOf(param);
-                out = this.deleteTask(x);
-            } catch (NumberFormatException e) {
-                out = displayInvalidIndexErrorMessage();
-            } catch (IndexOutOfBoundsException e) {
-                out = displayInvalidIndexErrorMessage();
-            } finally {
-                break;
-            }
+            return processDeleteQuery(param);
         case "todo" :
-            try {
-                Todo task = Todo.produce(param);
-                out = this.addTask(task);
-            } catch (IllegalArgumentException e) {
-                out = displayInvalidFormatErrorMessage();
-            } finally {
-                break;
-            }
+            return processTodoQuery(param);
         case "deadline" :
-            try {
-                Deadline task = Deadline.produce(param);
-                out = this.addTask(task);
-            } catch (IllegalArgumentException e) {
-                out = displayInvalidFormatErrorMessage();
-            } finally {
-                break;
-            }
+            return processDeadlineQuery(param);
         case "event" :
-            try {
-                Event task = Event.produce(param);
-                out = this.addTask(task);
-            } catch (IllegalArgumentException e) {
-                out = displayInvalidFormatErrorMessage();
-            } finally {
-                break;
-            }
+            return processEventQuery(param);
         default :
-            out = displayInvalidPromptErrorMessage();
+            return displayInvalidPromptErrorMessage();
         }
-
-        return out;
     }
 
     /**
@@ -347,18 +364,18 @@ public class TaskContainer extends Message {
      */
     @Override
     public String toString() {
-        String out = "";
+        StringBuilder out = new StringBuilder();
         boolean isBeginning = true;
 
         for (Task task : tasks) {
             if (isBeginning) { // help removing unnecessary ends of line
                 isBeginning = false;
-                out += task.taskToData();
+                out.append(task.taskToData());
                 continue;
             }
-            out += "\n" + task.taskToData();
+            out.append("\n").append(task.taskToData());
         }
 
-        return out;
+        return out.toString();
     }
 }

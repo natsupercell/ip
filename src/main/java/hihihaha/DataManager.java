@@ -55,7 +55,7 @@ public class DataManager {
         } catch (IllegalArgumentException e) {
             System.out.println("Couldn't load data. Data file is corrupted.");
         } catch (IOException e) {
-            System.out.println("IOException occurred");
+            System.out.println("IOException occurred.");
         }
         return tc;
     }
